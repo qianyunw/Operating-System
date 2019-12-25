@@ -1,0 +1,19 @@
+先定义要调用的函数类型
+typedef int (WINAPI *PFNLIB)(void);
+注：此函数原型为：int fnLib(void);是dll中的导出函数
+
+app中调用此导出函数的代码
+
+HINSTANCE hMod = LoadLibrary( "lib.dll" ); 
+if( hMod )
+{
+	pfnLib = (PFNLIB)GetProcAddress( hMod, "fnLib" );
+	if( pfnLib )
+	{
+		pfnLib(); // 此处就是调用dll中的函数
+	}
+}
+
+	FreeLibrary( hMod );
+ 
+ 

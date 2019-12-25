@@ -1,0 +1,404 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+
+body {
+	background-image: url();
+}
+.重点1 {
+	font-style: italic;
+	font-weight: bold;
+	color: #0000FF;
+	font-size: 14px;
+}
+
+.标题 {
+	font-family: "宋体";
+	font-size: 12px;
+	line-height: 20px;
+	color: #0000FF;
+}
+
+.text {
+	font-family: "宋体";
+	font-size: 14px;
+	line-height: 25px;
+}
+.style1 {font-family: "方正舒体"}
+.style2 {
+	font-family: "方正舒体";
+	font-weight: bold;
+	font-size: 42px;
+	color: #FF0000;
+}
+.style3 {color: #FF0000}
+.style4 {font-family: "宋体"; font-size: 12px; line-height: 20px; color: #FF0000; }
+.style5 {font-family: "宋体"; font-size: 12px; line-height: 20px; color: #FF00FF; }
+.style8 {font-size: 12px}
+.style9 {
+	font-size: 12px;
+	color: #FF0000;
+	font-family: "Times New Roman", Times, serif;
+}
+.style21 {font-family: "宋体"; font-size: 14px; line-height: 25px; font-style: italic; }
+.style35 {
+	color: #FF00FF;
+	font-weight: bold;
+}
+.style36 {
+	color: #0000FF;
+	font-weight: bold;
+}
+.style37 {
+	font-size: 14px;
+	color: #FF0000;
+}
+.style38 {
+	font-family: "宋体";
+	font-size: 14px;
+	line-height: 25px;
+	color: #FF0000;
+	font-weight: bold;
+}
+.style31 {	font-family: "宋体";
+	font-size: 14px;
+	line-height: 25px;
+	font-weight: bold;
+	color: #FF0000;
+}
+
+-->
+</style>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+
+function MM_timelinePlay(tmLnName, myID) { //v1.2
+  //Copyright 1998, 1999, 2000, 2001, 2002, 2003, 2004 Macromedia, Inc. All rights reserved.
+  var i,j,tmLn,props,keyFrm,sprite,numKeyFr,firstKeyFr,propNum,theObj,firstTime=false;
+  if (document.MM_Time == null) MM_initTimelines(); //if *very* 1st time
+  tmLn = document.MM_Time[tmLnName];
+  if (myID == null) { myID = ++tmLn.ID; firstTime=true;}//if new call, incr ID
+  if (myID == tmLn.ID) { //if Im newest
+    setTimeout('MM_timelinePlay("'+tmLnName+'",'+myID+')',tmLn.delay);
+    fNew = ++tmLn.curFrame;
+    for (i=0; i<tmLn.length; i++) {
+      sprite = tmLn[i];
+      if (sprite.charAt(0) == 's') {
+        if (sprite.obj) {
+          numKeyFr = sprite.keyFrames.length; firstKeyFr = sprite.keyFrames[0];
+          if (fNew >= firstKeyFr && fNew <= sprite.keyFrames[numKeyFr-1]) {//in range
+            keyFrm=1;
+            for (j=0; j<sprite.values.length; j++) {
+              props = sprite.values[j]; 
+              if (numKeyFr != props.length) {
+                if (props.prop2 == null) sprite.obj[props.prop] = props[fNew-firstKeyFr];
+                else        sprite.obj[props.prop2][props.prop] = props[fNew-firstKeyFr];
+              } else {
+                while (keyFrm<numKeyFr && fNew>=sprite.keyFrames[keyFrm]) keyFrm++;
+                if (firstTime || fNew==sprite.keyFrames[keyFrm-1]) {
+                  if (props.prop2 == null) sprite.obj[props.prop] = props[keyFrm-1];
+                  else        sprite.obj[props.prop2][props.prop] = props[keyFrm-1];
+        } } } } }
+      } else if (sprite.charAt(0)=='b' && fNew == sprite.frame) eval(sprite.value);
+      if (fNew > tmLn.lastFrame) tmLn.ID = 0;
+  } }
+}
+
+function MM_timelineGoto(tmLnName, fNew, numGotos) { //v2.0
+  //Copyright 1998, 1999, 2000, 2001, 2002, 2003, 2004 Macromedia, Inc. All rights reserved.
+  var i,j,tmLn,props,keyFrm,sprite,numKeyFr,firstKeyFr,lastKeyFr,propNum,theObj;
+  if (document.MM_Time == null) MM_initTimelines(); //if *very* 1st time
+  tmLn = document.MM_Time[tmLnName];
+  if (numGotos != null)
+    if (tmLn.gotoCount == null) tmLn.gotoCount = 1;
+    else if (tmLn.gotoCount++ >= numGotos) {tmLn.gotoCount=0; return}
+  jmpFwd = (fNew > tmLn.curFrame);
+  for (i = 0; i < tmLn.length; i++) {
+    sprite = (jmpFwd)? tmLn[i] : tmLn[(tmLn.length-1)-i]; //count bkwds if jumping back
+    if (sprite.charAt(0) == "s") {
+      numKeyFr = sprite.keyFrames.length;
+      firstKeyFr = sprite.keyFrames[0];
+      lastKeyFr = sprite.keyFrames[numKeyFr - 1];
+      if ((jmpFwd && fNew<firstKeyFr) || (!jmpFwd && lastKeyFr<fNew)) continue; //skip if untouchd
+      for (keyFrm=1; keyFrm<numKeyFr && fNew>=sprite.keyFrames[keyFrm]; keyFrm++);
+      for (j=0; j<sprite.values.length; j++) {
+        props = sprite.values[j];
+        if (numKeyFr == props.length) propNum = keyFrm-1 //keyframes only
+        else propNum = Math.min(Math.max(0,fNew-firstKeyFr),props.length-1); //or keep in legal range
+        if (sprite.obj != null) {
+          if (props.prop2 == null) sprite.obj[props.prop] = props[propNum];
+          else        sprite.obj[props.prop2][props.prop] = props[propNum];
+      } }
+    } else if (sprite.charAt(0)=='b' && fNew == sprite.frame) eval(sprite.value);
+  }
+  tmLn.curFrame = fNew;
+  if (tmLn.ID == 0) eval('MM_timelinePlay(tmLnName)');
+}
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+function MM_initTimelines() { //v4.0
+    //MM_initTimelines() Copyright 1997 Macromedia, Inc. All rights reserved.
+    var ns = navigator.appName == "Netscape";
+    var ns4 = (ns && parseInt(navigator.appVersion) == 4);
+    var ns5 = (ns && parseInt(navigator.appVersion) > 4);
+    var macIE5 = (navigator.platform ? (navigator.platform == "MacPPC") : false) && (navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4);
+    document.MM_Time = new Array(1);
+    document.MM_Time[0] = new Array(2);
+    document.MM_Time["Timeline1"] = document.MM_Time[0];
+    document.MM_Time[0].MM_Name = "Timeline1";
+    document.MM_Time[0].fps = 12;
+    document.MM_Time[0][0] = new String("sprite");
+    document.MM_Time[0][0].slot = 1;
+    if (ns4)
+        document.MM_Time[0][0].obj = document["Layer1"];
+    else if (ns5)
+        document.MM_Time[0][0].obj = document.getElementById("Layer1");
+    else
+        document.MM_Time[0][0].obj = document.all ? document.all["Layer1"] : null;
+    document.MM_Time[0][0].keyFrames = new Array(1, 100);
+    document.MM_Time[0][0].values = new Array(3);
+    if (ns5 || macIE5)
+        document.MM_Time[0][0].values[0] = new Array("325px", "331px", "336px", "342px", "348px", "354px", "359px", "365px", "371px", "377px", "382px", "388px", "394px", "400px", "405px", "411px", "417px", "423px", "428px", "434px", "440px", "446px", "451px", "457px", "463px", "469px", "474px", "480px", "486px", "492px", "497px", "503px", "509px", "515px", "520px", "526px", "532px", "538px", "543px", "549px", "555px", "561px", "566px", "572px", "578px", "584px", "589px", "595px", "601px", "607px", "612px", "618px", "624px", "630px", "635px", "641px", "647px", "653px", "658px", "664px", "670px", "676px", "681px", "687px", "693px", "699px", "704px", "710px", "716px", "722px", "727px", "733px", "739px", "745px", "750px", "756px", "762px", "768px", "773px", "779px", "785px", "791px", "796px", "802px", "808px", "814px", "819px", "825px", "831px", "837px", "842px", "848px", "854px", "860px", "865px", "871px", "877px", "883px", "888px", "894px");
+    else
+        document.MM_Time[0][0].values[0] = new Array(325,331,336,342,348,354,359,365,371,377,382,388,394,400,405,411,417,423,428,434,440,446,451,457,463,469,474,480,486,492,497,503,509,515,520,526,532,538,543,549,555,561,566,572,578,584,589,595,601,607,612,618,624,630,635,641,647,653,658,664,670,676,681,687,693,699,704,710,716,722,727,733,739,745,750,756,762,768,773,779,785,791,796,802,808,814,819,825,831,837,842,848,854,860,865,871,877,883,888,894);
+    document.MM_Time[0][0].values[0].prop = "left";
+    if (ns5 || macIE5)
+        document.MM_Time[0][0].values[1] = new Array("136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px");
+    else
+        document.MM_Time[0][0].values[1] = new Array(136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136);
+    document.MM_Time[0][0].values[1].prop = "top";
+    if (!ns4) {
+        document.MM_Time[0][0].values[0].prop2 = "style";
+        document.MM_Time[0][0].values[1].prop2 = "style";
+    }
+    if (ns5 || macIE5)
+        document.MM_Time[0][0].values[2] = new Array("212px", "211px", "211px", "211px", "211px", "211px", "211px", "210px", "210px", "210px", "210px", "210px", "210px", "209px", "209px", "209px", "209px", "209px", "209px", "208px", "208px", "208px", "208px", "208px", "208px", "207px", "207px", "207px", "207px", "207px", "207px", "206px", "206px", "206px", "206px", "206px", "206px", "206px", "205px", "205px", "205px", "205px", "205px", "205px", "204px", "204px", "204px", "204px", "204px", "204px", "203px", "203px", "203px", "203px", "203px", "203px", "202px", "202px", "202px", "202px", "202px", "202px", "201px", "201px", "201px", "201px", "201px", "201px", "201px", "200px", "200px", "200px", "200px", "200px", "200px", "199px", "199px", "199px", "199px", "199px", "199px", "198px", "198px", "198px", "198px", "198px", "198px", "197px", "197px", "197px", "197px", "197px", "197px", "196px", "196px", "196px", "196px", "196px", "196px", "196px");
+    else
+        document.MM_Time[0][0].values[2] = new Array(212,211,211,211,211,211,211,210,210,210,210,210,210,209,209,209,209,209,209,208,208,208,208,208,208,207,207,207,207,207,207,206,206,206,206,206,206,206,205,205,205,205,205,205,204,204,204,204,204,204,203,203,203,203,203,203,202,202,202,202,202,202,201,201,201,201,201,201,201,200,200,200,200,200,200,199,199,199,199,199,199,198,198,198,198,198,198,197,197,197,197,197,197,196,196,196,196,196,196,196);
+    document.MM_Time[0][0].values[2].prop = "width";
+    if (!ns4)
+        document.MM_Time[0][0].values[2].prop2 = "style";
+    document.MM_Time[0][1] = new String("behavior");
+    document.MM_Time[0][1].frame = 61;
+    document.MM_Time[0][1].value = "MM_timelineGoto('Timeline1','1')";
+    document.MM_Time[0].lastFrame = 100;
+    for (i=0; i<document.MM_Time.length; i++) {
+        document.MM_Time[i].ID = null;
+        document.MM_Time[i].curFrame = 0;
+        document.MM_Time[i].delay = 1000/document.MM_Time[i].fps;
+    }
+}
+//-->
+</script>
+</head>
+
+<body onLoad="MM_timelinePlay('Timeline1');MM_preloadImages('../images/dh2_1.gif','../images/dh2_2.gif','../images/dh2_3.gif','../images/dh2_4.gif','../images/dh2_5.gif')">
+<div id="Layer1" class="style5" style="position:absolute; left:325px; top:136px; width:212px; height:18px; z-index:1">欢迎访问“计算机操作系统”网站</div>
+<table width="760" height="90" border="0" align="center" cellpadding="0" cellspacing="0" background="../c/temp/line.gif">
+  <tr>
+    <td width="800" height="90" background="../images/logo1.gif"><div align="center" class="style1">
+      <div align="left" class="style2">计算机操作系统<a name="top"></a></div>
+    </div></td>
+  </tr>
+</table>
+<table width="760" height="24" border="0" align="center" cellpadding="1" cellspacing="0" bordercolor="#00CCFF">
+  <tr bordercolor="#FFFFFF">
+    <td><a href="../index.htm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image4','','../images/dh2_1.gif',1)"><img src="../images/dh1_1.gif" alt="首页" name="Image4" width="149" height="23" border="0"></a></td>
+    <td><a href="../course/index.htm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image5','','../images/dh2_2.gif',1)"><img src="../images/dh1_2.gif" alt="网页制作" name="Image5" width="151" height="23" border="0"></a></td>
+    <td><a href="index.htm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image6','','../images/dh2_3.gif',1)"><img src="../images/dh1_3.gif" alt="动画制作" name="Image6" width="151" height="23" border="0"></a></td>
+    <td><a href="../ftp/index.htm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image7','','../images/dh2_4.gif',1)"><img src="../images/dh1_4.gif" alt="Active Server Page" name="Image7" width="151" height="23" border="0"></a></td>
+    <td><a href="../bbs/index.asp" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image8','','../images/dh2_5.gif',1)"><img src="../images/dh1_5.gif" alt="论坛" name="Image8" width="151" height="23" border="0"></a></td>
+  </tr>
+</table>
+<table width="760" height="24" border="0" align="center" cellpadding="1" cellspacing="0" background="../c/temp/line.gif">
+  <tr bgcolor="#D3E7FF">
+    <td height="24" class="style4">当前位置：首页</td>
+  </tr>
+</table>
+<table width="760" border="0" align="center" background="../images/line.gif">
+  <tr>
+    <td width="100" height="143" valign="top" bordercolor="#000000" bgcolor="#E8E8E8"><p>&nbsp;</p>    </td>
+    <td width="650" valign="top"><p align="center" class="text"><br>
+        &nbsp;<span class="style36">上机内容</span></p>
+      <p class="text"><span class="style3"><strong>一、实验目的</strong></span>：用高级语言编写和调试一个进程调度程序，以加深对进程的概念及进程调度算法的理解。</p>
+      <p>  <span class="style38">二、例题： 设计一个有 N个进程共行的进程调度程序。 </span></p>
+      <P class="text"><FONT 
+      color=#993399>　&nbsp; </FONT>进程调度算法：简单轮转法。其基本思想是：所有就绪进程按 FCFS排成一个队列，总是把处理机分配给队首的进程，各进程占用CPU的时间片相同。如果运行进程用完它的时间片后还为完成，就把它送回到就绪队列的末尾，把处理机重新分配给队首的进程。直至所有的进程运行完毕。 </P>
+      <P class="text">　　每个进程有一个进程控制块（ PCB）表示。进程控制块可以包含如下信息：进程名、优先数、到达时间、需要运行时间、已用CPU时间、进程状态等等。 </P>
+      <P class="text">　　进程的优先数及需要的运行时间可以事先人为地指定（也可以由随机数产生）。进程的到达时间为进程输入的时间。 </P>
+      <P class="text">　　进程的运行时间以时间片为单位进行计算。 </P>
+      <P class="text">　　每个进程的状态可以是就绪 W（Wait）、运行R（Run）、或完成F（Finish）三种状态之一。 </P>
+      <P class="text">　　就绪进程获得 CPU后都只能运行一个时间片。用已占用CPU时间加1来表示。 </P>
+      <P class="text">　　如果运行一个时间片后，进程的已占用 CPU时间已达到所需要的运行时间，则撤消该进程，如果运行一个时间片后进程的已占用CPU时间还未达所需要的运行时间，也就是进程还需要继续运行，此时应将进程插入就绪队列等待CPU。 </P>
+      <P class="text">　　每进行一次调度程序都打印一次运行进程、就绪队列、以及各个进程的 PCB，以便进行检查。 　　 </P>
+      <P class="text">&nbsp;&nbsp;&nbsp; 重复以上过程，直到所要进程都完成为止。</P>
+      <P class="text"><FONT color=#993399>调度算法的流程图如下 :</FONT></P>
+      <P align="center" class="text"><img src="lu1.gif" width="376" height="548"></P>
+      <P align="left" class="text"><FONT color=#993399><STRONG>进程调度源程序如下：</STRONG></FONT></P>
+      <P align="left" class="text"><strong><a href="examples/process.c">process.c(点击下载)</a></strong></P>
+      <P align="left" class="text">#include &lt;stdio.h&gt;</P>
+      <p class="text">#define getpch(type) (type*)malloc(sizeof(type)) <br>
+        //#define NULL 0 </p>
+      <p class="text">struct pcb { /* 定义进程控制块PCB */ <br>
+&nbsp;&nbsp;&nbsp;&nbsp; char name[10]; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; char state; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; int super; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; int ntime; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; int rtime; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; struct pcb * link; <br>
+  }*ready=NULL,*p; </p>
+      <p class="text">typedef struct pcb PCB; </p>
+      <p class="text">void sort() /* 建立对进程进行优先级排列函数*/ <br>
+        { <br>
+&nbsp;&nbsp;&nbsp;&nbsp; PCB *first;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; first=ready;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; if (ready==NULL)<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; ready=p; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; else{<br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; while (first-&gt;link!=NULL) <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; first=first-&gt;link;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  first-&gt;link=p;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+  } </p>
+      <p class="text">void input() /* 建立进程控制块函数*/ <br>
+        { <br>
+&nbsp;&nbsp;&nbsp;&nbsp; int i,num; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;   printf(&quot;\n 请输入进程个数?&quot;); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; scanf(&quot;%d&quot;,&amp;num); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; for(i=0;i&lt;num;i++) <br>
+&nbsp;&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n 进程号No.%d:\n&quot;,i); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; p=getpch(PCB); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n 输入进程名:&quot;); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; scanf(&quot;%s&quot;,p-&gt;name); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n 输入进程优先数:&quot;); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; scanf(&quot;%d&quot;,&amp;p-&gt;super); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n 输入进程运行时间:&quot;); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; scanf(&quot;%d&quot;,&amp;p-&gt;ntime); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n&quot;); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; p-&gt;rtime=0;p-&gt;state='w'; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; p-&gt;link=NULL; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; sort(); /* 调用sort函数*/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+  } </p>
+      <p class="text">void disp(PCB * pr) /*建立进程显示函数,用于显示当前进程*/ <br>
+        { <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n qname \t state \t super \t ndtime \t runtime \n&quot;); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot; |%s\t&quot;,pr-&gt;name); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot; |%c\t&quot;,pr-&gt;state); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot; |%d\t&quot;,pr-&gt;super); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot; |%d\t&quot;,pr-&gt;ntime); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot; |%d\t&quot;,pr-&gt;rtime); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n&quot;); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+  } <br>
+  <br>
+  void check() /* 建立进程查看函数 */ <br>
+  { <br>
+&nbsp;&nbsp;&nbsp;&nbsp; PCB* pr; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n **** 当前正在运行的进程是:%s&quot;,p-&gt;name); /*显示当前运行进程*/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp; disp(p); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; pr=ready; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n ****当前就绪队列状态为:\n&quot;); /*显示就绪队列状态*/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp; while(pr!=NULL) <br>
+&nbsp;&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; disp(pr); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; pr=pr-&gt;link; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+  } </p>
+      <p class="text">void destroy() /*建立进程撤消函数(进程运行结束,撤消进程)*/ <br>
+        { <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n 进程 [%s] 已完成.\n&quot;,p-&gt;name); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; free(p); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+  } </p>
+      <p class="text">void running() /* 建立进程就绪函数(进程运行时间到,置就绪状态*/ <br>
+        {<br>
+&nbsp;&nbsp;&nbsp;&nbsp; (p-&gt;rtime)++; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; if(p-&gt;rtime==p-&gt;ntime) <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; destroy(); /* 调用destroy函数*/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp; else <br>
+&nbsp;&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; p-&gt;state='w'; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; sort(); /*调用sort函数*/ <br>
+&nbsp;&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+  } </p>
+      <p class="text">void main() /*主函数*/ </p>
+      <p class="text">{ <br>
+&nbsp;&nbsp;&nbsp;&nbsp; int h=0; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; char ch; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; input(); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; ch=getchar(); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; while(ready!=NULL) <br>
+&nbsp;&nbsp;&nbsp;&nbsp; { <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; h++; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n The execute number:%d \n&quot;,h); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; p=ready; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; ready=p-&gt;link; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; p-&gt;link=NULL; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; p-&gt;state='R'; <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; check(); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; running(); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n 按任一键继续......&quot;); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; ch=getchar(); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n\n 进程已经完成.\n&quot;); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; ch=getchar(); <br>
+&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+  } <br>
+      </p>
+      <p class="text style37"><STRONG>三．实验题(要求完成的上机作业)：</STRONG></p>
+      <p class="text">&nbsp;&nbsp;&nbsp; （1）阅读上面的例题，加深对进程的概念及进程调度算法的理解。</p>
+      <p class="text">&nbsp;&nbsp;&nbsp; （2）编写并调试一个模拟的进程调度程序，采用“最高优先数优先”调度算法对多个并发进程进行调度。 <span class="style35">要求</span>：采用动态优先数。即进程的优先数在创建进程时可以给定一个初始值，并且可以按一定原则修改优先数：在进程获得一次CPU后就将其优先数减少1。</p>
+      <P class="text">　　“最高优先数优先”调度算法的基本思想是把CPU分配给就绪队列中优先数最高的进程。 </P>
+      <p class="style31" >作业上交要求：</p>
+      <p >&nbsp;&nbsp; &nbsp; 先上机检查，然后上交源程序。</p>
+      <p >&nbsp;&nbsp;&nbsp;&nbsp;源程序命名方式：学号_姓名_schedual.doc</p>
+      <p >&nbsp;&nbsp; &nbsp; 实验报告通过Email上交。Email地址：xiaorong@bnu.edu.cn</p>      <P class="text">&nbsp;</P></td>
+  </tr>
+  <tr>
+    <td height="92" colspan="2" valign="top">      <hr width="750" size="1" noshade class="style3">      
+      <p align="center" class="style9">&nbsp;</p>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

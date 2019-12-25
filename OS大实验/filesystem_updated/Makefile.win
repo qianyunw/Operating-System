@@ -1,0 +1,81 @@
+# Project: filesys
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = close.o creat.o delete.o dir.o format.o halt.o iallfre.o igetput.o install.o log.o main.o name.o open.o access.o debug.o shell.o ballfre.o rdwt.o $(RES)
+LINKOBJ  = close.o creat.o delete.o dir.o format.o halt.o iallfre.o igetput.o install.o log.o main.o name.o open.o access.o debug.o shell.o ballfre.o rdwt.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib"  
+INCS =  -I"C:/Dev-Cpp/include" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include" 
+BIN  = filesys.exe
+CXXFLAGS = $(CXXINCS)  
+CFLAGS = $(INCS)  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before filesys.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "filesys.exe" $(LIBS)
+
+close.o: close.cpp
+	$(CPP) -c close.cpp -o close.o $(CXXFLAGS)
+
+creat.o: creat.cpp
+	$(CPP) -c creat.cpp -o creat.o $(CXXFLAGS)
+
+delete.o: delete.cpp
+	$(CPP) -c delete.cpp -o delete.o $(CXXFLAGS)
+
+dir.o: dir.cpp
+	$(CPP) -c dir.cpp -o dir.o $(CXXFLAGS)
+
+format.o: format.cpp
+	$(CPP) -c format.cpp -o format.o $(CXXFLAGS)
+
+halt.o: halt.cpp
+	$(CPP) -c halt.cpp -o halt.o $(CXXFLAGS)
+
+iallfre.o: iallfre.cpp
+	$(CPP) -c iallfre.cpp -o iallfre.o $(CXXFLAGS)
+
+igetput.o: igetput.cpp
+	$(CPP) -c igetput.cpp -o igetput.o $(CXXFLAGS)
+
+install.o: install.cpp
+	$(CPP) -c install.cpp -o install.o $(CXXFLAGS)
+
+log.o: log.cpp
+	$(CPP) -c log.cpp -o log.o $(CXXFLAGS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+name.o: name.cpp
+	$(CPP) -c name.cpp -o name.o $(CXXFLAGS)
+
+open.o: open.cpp
+	$(CPP) -c open.cpp -o open.o $(CXXFLAGS)
+
+access.o: access.cpp
+	$(CPP) -c access.cpp -o access.o $(CXXFLAGS)
+
+debug.o: debug.cpp
+	$(CPP) -c debug.cpp -o debug.o $(CXXFLAGS)
+
+shell.o: shell.cpp
+	$(CPP) -c shell.cpp -o shell.o $(CXXFLAGS)
+
+ballfre.o: ballfre.cpp
+	$(CPP) -c ballfre.cpp -o ballfre.o $(CXXFLAGS)
+
+rdwt.o: rdwt.cpp
+	$(CPP) -c rdwt.cpp -o rdwt.o $(CXXFLAGS)

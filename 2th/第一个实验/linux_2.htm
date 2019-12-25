@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><!-- InstanceBegin template="/Templates/experiment.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>无标题文档</title>
+<style type="text/css">
+<!-- 
+
+body {
+	background-image: url();
+}
+.重点1 {
+	font-style: italic;
+	font-weight: bold;
+	color: #0000FF;
+	font-size: 14px;
+}
+
+.标题 {
+	font-family: "宋体";
+	font-size: 12px;
+	line-height: 20px;
+	color: #0000FF;
+}
+
+.text {
+	font-family: "宋体";
+	font-size: 14px;
+	line-height: 25px;
+}
+.style1 {font-family: "方正舒体"}
+.style2 {
+	font-family: "方正舒体";
+	font-weight: bold;
+	font-size: 42px;
+	color: #FF0000;
+}
+.style3 {color: #FF0000}
+.style4 {font-family: "宋体"; font-size: 12px; line-height: 20px; color: #FF0000; }
+.style5 {font-family: "宋体"; font-size: 12px; line-height: 20px; color: #FF00FF; }
+.style8 {font-size: 12px}
+.style9 {
+	font-size: 12px;
+	color: #FF0000;
+	font-family: "Times New Roman", Times, serif;
+}
+.style21 {font-family: "宋体"; font-size: 14px; line-height: 25px; font-style: italic; }
+.style22 {color: #0000FF; font-size: 14px; font-weight: bold;}
+.style24 {font-family: "宋体"; font-size: 14px; line-height: 25px; color: #000000; }
+.style25 {font-size: 14px; color: #0000FF;}
+
+-->
+</style>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+
+function MM_timelinePlay(tmLnName, myID) { //v1.2
+  //Copyright 1998, 1999, 2000, 2001, 2002, 2003, 2004 Macromedia, Inc. All rights reserved.
+  var i,j,tmLn,props,keyFrm,sprite,numKeyFr,firstKeyFr,propNum,theObj,firstTime=false;
+  if (document.MM_Time == null) MM_initTimelines(); //if *very* 1st time
+  tmLn = document.MM_Time[tmLnName];
+  if (myID == null) { myID = ++tmLn.ID; firstTime=true;}//if new call, incr ID
+  if (myID == tmLn.ID) { //if Im newest
+    setTimeout('MM_timelinePlay("'+tmLnName+'",'+myID+')',tmLn.delay);
+    fNew = ++tmLn.curFrame;
+    for (i=0; i<tmLn.length; i++) {
+      sprite = tmLn[i];
+      if (sprite.charAt(0) == 's') {
+        if (sprite.obj) {
+          numKeyFr = sprite.keyFrames.length; firstKeyFr = sprite.keyFrames[0];
+          if (fNew >= firstKeyFr && fNew <= sprite.keyFrames[numKeyFr-1]) {//in range
+            keyFrm=1;
+            for (j=0; j<sprite.values.length; j++) {
+              props = sprite.values[j]; 
+              if (numKeyFr != props.length) {
+                if (props.prop2 == null) sprite.obj[props.prop] = props[fNew-firstKeyFr];
+                else        sprite.obj[props.prop2][props.prop] = props[fNew-firstKeyFr];
+              } else {
+                while (keyFrm<numKeyFr && fNew>=sprite.keyFrames[keyFrm]) keyFrm++;
+                if (firstTime || fNew==sprite.keyFrames[keyFrm-1]) {
+                  if (props.prop2 == null) sprite.obj[props.prop] = props[keyFrm-1];
+                  else        sprite.obj[props.prop2][props.prop] = props[keyFrm-1];
+        } } } } }
+      } else if (sprite.charAt(0)=='b' && fNew == sprite.frame) eval(sprite.value);
+      if (fNew > tmLn.lastFrame) tmLn.ID = 0;
+  } }
+}
+
+function MM_timelineGoto(tmLnName, fNew, numGotos) { //v2.0
+  //Copyright 1998, 1999, 2000, 2001, 2002, 2003, 2004 Macromedia, Inc. All rights reserved.
+  var i,j,tmLn,props,keyFrm,sprite,numKeyFr,firstKeyFr,lastKeyFr,propNum,theObj;
+  if (document.MM_Time == null) MM_initTimelines(); //if *very* 1st time
+  tmLn = document.MM_Time[tmLnName];
+  if (numGotos != null)
+    if (tmLn.gotoCount == null) tmLn.gotoCount = 1;
+    else if (tmLn.gotoCount++ >= numGotos) {tmLn.gotoCount=0; return}
+  jmpFwd = (fNew > tmLn.curFrame);
+  for (i = 0; i < tmLn.length; i++) {
+    sprite = (jmpFwd)? tmLn[i] : tmLn[(tmLn.length-1)-i]; //count bkwds if jumping back
+    if (sprite.charAt(0) == "s") {
+      numKeyFr = sprite.keyFrames.length;
+      firstKeyFr = sprite.keyFrames[0];
+      lastKeyFr = sprite.keyFrames[numKeyFr - 1];
+      if ((jmpFwd && fNew<firstKeyFr) || (!jmpFwd && lastKeyFr<fNew)) continue; //skip if untouchd
+      for (keyFrm=1; keyFrm<numKeyFr && fNew>=sprite.keyFrames[keyFrm]; keyFrm++);
+      for (j=0; j<sprite.values.length; j++) {
+        props = sprite.values[j];
+        if (numKeyFr == props.length) propNum = keyFrm-1 //keyframes only
+        else propNum = Math.min(Math.max(0,fNew-firstKeyFr),props.length-1); //or keep in legal range
+        if (sprite.obj != null) {
+          if (props.prop2 == null) sprite.obj[props.prop] = props[propNum];
+          else        sprite.obj[props.prop2][props.prop] = props[propNum];
+      } }
+    } else if (sprite.charAt(0)=='b' && fNew == sprite.frame) eval(sprite.value);
+  }
+  tmLn.curFrame = fNew;
+  if (tmLn.ID == 0) eval('MM_timelinePlay(tmLnName)');
+}
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+function MM_initTimelines() { //v4.0
+    //MM_initTimelines() Copyright 1997 Macromedia, Inc. All rights reserved.
+    var ns = navigator.appName == "Netscape";
+    var ns4 = (ns && parseInt(navigator.appVersion) == 4);
+    var ns5 = (ns && parseInt(navigator.appVersion) > 4);
+    document.MM_Time = new Array(1);
+    document.MM_Time[0] = new Array(2);
+    document.MM_Time["Timeline1"] = document.MM_Time[0];
+    document.MM_Time[0].MM_Name = "Timeline1";
+    document.MM_Time[0].fps = 12;
+    document.MM_Time[0][0] = new String("sprite");
+    document.MM_Time[0][0].slot = 1;
+    if (ns4)
+        document.MM_Time[0][0].obj = document["Layer1"];
+    else if (ns5)
+        document.MM_Time[0][0].obj = document.getElementById("Layer1");
+    else
+        document.MM_Time[0][0].obj = document.all ? document.all["Layer1"] : null;
+    document.MM_Time[0][0].keyFrames = new Array(1, 100);
+    document.MM_Time[0][0].values = new Array(3);
+    if (ns5)
+        document.MM_Time[0][0].values[0] = new Array("317px", "323px", "329px", "334px", "340px", "346px", "352px", "358px", "364px", "369px", "375px", "381px", "387px", "393px", "399px", "404px", "410px", "416px", "422px", "428px", "434px", "439px", "445px", "451px", "457px", "463px", "469px", "474px", "480px", "486px", "492px", "498px", "504px", "509px", "515px", "521px", "527px", "533px", "538px", "544px", "550px", "556px", "562px", "568px", "573px", "579px", "585px", "591px", "597px", "603px", "608px", "614px", "620px", "626px", "632px", "638px", "643px", "649px", "655px", "661px", "667px", "673px", "678px", "684px", "690px", "696px", "702px", "707px", "713px", "719px", "725px", "731px", "737px", "742px", "748px", "754px", "760px", "766px", "772px", "777px", "783px", "789px", "795px", "801px", "807px", "812px", "818px", "824px", "830px", "836px", "842px", "847px", "853px", "859px", "865px", "871px", "877px", "882px", "888px", "894px");
+    else
+        document.MM_Time[0][0].values[0] = new Array(317,323,329,334,340,346,352,358,364,369,375,381,387,393,399,404,410,416,422,428,434,439,445,451,457,463,469,474,480,486,492,498,504,509,515,521,527,533,538,544,550,556,562,568,573,579,585,591,597,603,608,614,620,626,632,638,643,649,655,661,667,673,678,684,690,696,702,707,713,719,725,731,737,742,748,754,760,766,772,777,783,789,795,801,807,812,818,824,830,836,842,847,853,859,865,871,877,882,888,894);
+    document.MM_Time[0][0].values[0].prop = "left";
+    if (ns5)
+        document.MM_Time[0][0].values[1] = new Array("136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px", "136px");
+    else
+        document.MM_Time[0][0].values[1] = new Array(136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136,136);
+    document.MM_Time[0][0].values[1].prop = "top";
+    if (!ns4) {
+        document.MM_Time[0][0].values[0].prop2 = "style";
+        document.MM_Time[0][0].values[1].prop2 = "style";
+    }
+    if (ns5)
+        document.MM_Time[0][0].values[2] = new Array("228px", "227px", "227px", "227px", "226px", "226px", "226px", "225px", "225px", "225px", "224px", "224px", "224px", "223px", "223px", "223px", "222px", "222px", "222px", "221px", "221px", "221px", "220px", "220px", "220px", "219px", "219px", "219px", "218px", "218px", "218px", "217px", "217px", "217px", "217px", "216px", "216px", "216px", "215px", "215px", "215px", "214px", "214px", "214px", "213px", "213px", "213px", "212px", "212px", "212px", "211px", "211px", "211px", "210px", "210px", "210px", "209px", "209px", "209px", "208px", "208px", "208px", "207px", "207px", "207px", "206px", "206px", "206px", "206px", "205px", "205px", "205px", "204px", "204px", "204px", "203px", "203px", "203px", "202px", "202px", "202px", "201px", "201px", "201px", "200px", "200px", "200px", "199px", "199px", "199px", "198px", "198px", "198px", "197px", "197px", "197px", "196px", "196px", "196px", "196px");
+    else
+        document.MM_Time[0][0].values[2] = new Array(228,227,227,227,226,226,226,225,225,225,224,224,224,223,223,223,222,222,222,221,221,221,220,220,220,219,219,219,218,218,218,217,217,217,217,216,216,216,215,215,215,214,214,214,213,213,213,212,212,212,211,211,211,210,210,210,209,209,209,208,208,208,207,207,207,206,206,206,206,205,205,205,204,204,204,203,203,203,202,202,202,201,201,201,200,200,200,199,199,199,198,198,198,197,197,197,196,196,196,196);
+    document.MM_Time[0][0].values[2].prop = "width";
+    if (!ns4)
+        document.MM_Time[0][0].values[2].prop2 = "style";
+    document.MM_Time[0][1] = new String("behavior");
+    document.MM_Time[0][1].frame = 61;
+    document.MM_Time[0][1].value = "MM_timelineGoto('Timeline1','1')";
+    document.MM_Time[0].lastFrame = 100;
+    for (i=0; i<document.MM_Time.length; i++) {
+        document.MM_Time[i].ID = null;
+        document.MM_Time[i].curFrame = 0;
+        document.MM_Time[i].delay = 1000/document.MM_Time[i].fps;
+    }
+}
+//-->
+</script>
+</head>
+
+<body onLoad="MM_timelinePlay('Timeline1');MM_preloadImages('../images/dh2_1.gif','../images/dh2_2.gif','../images/dh2_3.gif','../images/dh2_4.gif','../images/dh2_5.gif')">
+<div id="Layer1" class="style5" style="position:absolute; left:317px; top:136px; width:228px; height:18px; z-index:1">欢迎访问“计算机操作系统”网站</div>
+<table width="760" height="90" border="0" align="center" cellpadding="0" cellspacing="0" background="../c/temp/line.gif">
+  <tr>
+    <td width="800" height="90" background="../images/logo1.gif"><div align="center" class="style1">
+      <div align="left" class="style2">计算机操作系统<a name="top"></a></div>
+    </div></td>
+  </tr>
+</table>
+<table width="760" height="24" border="0" align="center" cellpadding="1" cellspacing="0" bordercolor="#00CCFF">
+  <tr bordercolor="#FFFFFF">
+    <td><a href="index.htm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image4','','../images/dh2_1.gif',1)"><img src="../images/dh1_1.gif" alt="首页" name="Image4" width="149" height="23" border="0"></a></td>
+    <td><a href="../course/index.htm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image5','','../images/dh2_2.gif',1)"><img src="../images/dh1_2.gif" alt="网页制作" name="Image5" width="151" height="23" border="0"></a></td>
+    <td><a href="index.htm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image6','','../images/dh2_3.gif',1)"><img src="../images/dh1_3.gif" alt="动画制作" name="Image6" width="151" height="23" border="0"></a></td>
+    <td><a href="../ftp/index.htm" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image7','','../images/dh2_4.gif',1)"><img src="../images/dh1_4.gif" alt="Active Server Page" name="Image7" width="151" height="23" border="0"></a></td>
+    <td><a href="../bbs/index.asp" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image8','','../images/dh2_5.gif',1)"><img src="../images/dh1_5.gif" alt="论坛" name="Image8" width="151" height="23" border="0"></a></td>
+  </tr>
+</table>
+<table width="760" height="24" border="0" align="center" cellpadding="1" cellspacing="0" background="../c/temp/line.gif">
+  <tr bgcolor="#D3E7FF">
+    <td height="24" class="style4">当前位置：上机实验</td>
+  </tr>
+</table>
+<table width="760" border="0" align="center" background="../images/line.gif">
+  <tr>
+    <td width="24" height="143" valign="top" bordercolor="#0000FF"><p>&nbsp;</p>    </td>
+    <td width="726" valign="top"><!-- InstanceBeginEditable name="EditRegion1" --> 
+      <p align="center"><span class="text style3"><B>Linux常用命令（2）</B></span></p>
+      <p><span class="text"><span style="font-weight: bold; color: #0000FF">1.显示文件的内容命令cat</span> &nbsp; <BR>
+　　　cat通常是用来在屏幕上滚动显示文件的内容。它的格式是： <BR>
+　　&nbsp; cat〈filename〉</span> </p>
+      <p><span class="text"><span style="font-weight: bold; color: #0000FF">2. more</span>  <BR>
+　　&nbsp; more是一个过滤程序，它可以每次一屏地翻阅文本文件的内容。这一命令只能对文件向下进行翻页。</span></p>
+      <p><span class="text"><span style="color: #0000FF; font-weight: bold">3. 查找指定目录的文件命令find</span> <BR>
+  　　　find命令用来查找指定目录的文件。当找到后将按照用户的要求对文件进行处理。语法是： <BR>
+  　　　find 以它为起点进行搜索的目录 想要查找的文件名或元字符 对文件执行的操作 <BR>
+  　　 <BR>
+  <span style="font-weight: bold; color: #0000FF">4.搜索指定的文本命令grep</span> <BR>
+  　　　grep命令用来在指定的对象中搜索指定的文本。语法是：grep〈text〉〈 file〉。它还可以和其他命令的结果联合使用，例如： <BR>
+  　　&nbsp; ps -ef|grep-v root <BR>
+  　　&nbsp; 这一命令要求grep接受ps命令的输出，并除去所有包含单词root的进程（-v 的含义是显示与文本不匹配的内容）。在不使用-v选项时，这一命令将显示进程 清单中所有包含单词root的进程。 </span></p>
+      <p><span class="text"><span style="font-weight: bold; color: #0000FF">5.转换文件格式命令dd </span><BR>
+  　　　dd命令用来转换文件格式</span></p>
+      <p><span class="text"><span style="font-weight: bold; color: #0000FF">6.查看进程的状态命令ps</span> <BR>
+    　　　ps用来报告进程的状态，它将显示一张当前进程的快照。 </span></p>
+      <p><span class="text"><span style="font-weight: bold; color: #0000FF">7.显示当前注册到系统的用户who </span><BR>
+　　　who命令用来显示当前注册到系统的每个用户的注册名、终端类型、注册时间和远程主机名。 <BR>
+　　　如果有两个非选项的参数传递给who命令，那么它将打印出正在运行此命令的用户的信息。 <BR>
+　　　如果想要查看某一对话所持续的时间，可利用-u选项。 　　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </span></p>
+      <p><span class="text"><span class="text" style="color: #0000FF; font-weight: bold">8.增加用户命令adduser </span><br>
+　　　adduser命令由root或其他具有权限的管理员用来创建新用户，跟在adduser 命令后面的是所要创建的帐号名，例如： adduser flying 　</span></p>
+      <p class="style22">9. 修改用户权限chmod </p>
+      <p><span class="text"><span class="style3" style="color: #0000FF">10</span>. 修改文件主 chown </span></p>
+      <p><span class="text">11. 改变文件所属组 chgrp</span></p>
+      <p><span class="text">12.   变更用户身份  su </span></p>
+      <p><BR>
+        <span class="text"><span style="font-weight: bold; color: #0000FF">13.显示、设置系统当前的主机名命令hostname </span><BR>
+  　　　既可以用来显示系统当前的主机名或域名，也可用来设置系统的主机名。 </span>      </p>
+      <p><span class="text"><span style="font-weight: bold; color: #0000FF">14.后台运行命令&amp; </span><BR>
+        　　　&amp;命令可用在其他任何命令的后面，它用来通知计算机在后台运行某一命令。通过把作业放在后台，用户可以继续使用当前的shell来处理其他命令；如果命令在前台运行的话，那么用户在此进程结束前不能继续使用当前的shell。 </span></p>
+      <p><span class="text"><span style="font-weight: bold; color: #0000FF">15. 迫使被挂起的进程在后台运行命令bg</span> <BR>
+　　　bg命令用来迫使被挂起的进程在后台运行。例如，当你已经在前台启动了一个命令时（没有在此命令后使用&amp;），你才想到这一命令将运行较长一段时间，但你这时还需使用shell。在这种情况下，可通过ctrl+z挂起当前运行的进程。此时你既可以使它长期挂起，也可以通过输入bg把这一进程放到后台运行。这样shell就可以用来执行其他的命令了。 <BR>
+　　 <BR>
+<span style="font-weight: bold; color: #0000FF">16.<span style="font-weight: bold; color: #0000FF">激活某个被挂起的进程并使它在前台运行</span>命令fg <BR>
+　　　</span><span style="color: #0000FF"><span style="color: #000000">fg命令用来激活某个被挂起的进程并使它在前台运行。当有一个进程正在运行时，由于某种原因需要挂起它，在执行完其他任务后，需要重新把这一进程调到前台运行，这时便可用bg命令使这一进程继续运行。</span></span><span style="font-weight: bold; color: #0000FF"> 　　</span>　　
+        <BR>
+        </span><span class="text">
+        　　 <BR>
+        <span style="font-weight: bold; color: #0000FF">17.别名命令alias</span> <BR>
+        　　　alias命令用来设置命令的别名或替代名。一般说来别名往往是实际命令名的缩写。例如用户为ls设置一个别名dir：  alias dir=ls <BR>
+      　　　若仅输入alias本身时，系统将显示当前所有的别名。 </span></p>
+      <p><span class="text">        <span style="font-weight: bold; color: #0000FF">18.取消别名命令unalias</span> <BR>
+    　　　unalias用来取消别名。如前面曾把dir设置为ls命令的别名，要取消它只须输入unalias dir即可。</span></p>
+      <p><span class="text">        <span style="font-weight: bold; color: #0000FF">19.安装命令mount</span> <BR>
+        　　　mount命令用来把特殊文件（通常是设备名）指定的文件系统安装在作为一个参数被指定的目录上。只有超级用户能够安装文件。如果在运行mount命令时不使用任何参数，它将列出当前被安装的所有文件系统。<BR>
+        　　 <BR>
+      
+        <span style="font-weight: bold; color: #0000FF">20.卸载命令umount </span><BR>
+        　　　umount命令用来卸载文件。语法是： <BR>
+        　　&nbsp; umount〈filename〉</span></p>
+      <p><span class="text">        <span style="font-weight: bold; color: #0000FF">21.解压命令unzip</span> <BR>
+        　　　unzip用来列出、检测或从某个zip文档中抽取文件，它的缺省用法是从文档中抽取文件。其基本语法是： <BR>
+        　　&nbsp; unzip〈filename〉 </span></p>
+      <p><span class="text"><span style="font-weight: bold; color: #0000FF">22.压缩命令zip</span> <BR>
+　　　zip命令用来列出、检测或向某个zip文档中添加文件，它的缺省用法就是向某个文档中添加文件。 <BR>
+        　　 <BR>
+        <span style="font-weight: bold; color: #0000FF">23.login</span> <BR>
+　　　当向系统注册时，将使用login。login命令也可用来随时从这一用户改变到另一用户。 <BR>
+　　 <BR>
+<span style="font-weight: bold; color: #0000FF">24.logout </span><BR>
+　　　logout命令用来使当前用户从系统中注销。如果这是你使用的注册到系统的唯一用户，那么将退出系统。 <BR>
+　　 <BR>
+<span style="font-weight: bold; color: #0000FF">25.关闭系统命令halt </span><br>
+　　　halt命令用来通知内核关闭系统，它是一个只能由超级用户执行的命令。 </span></p>
+      <p align="center"><span class="text"><a href="#top"><a href="#top"></a><a href="linux_1.htm"><img src="../images/Prev.gif" width="60" height="20" border="0"></a>&nbsp; <a href="#top"><img src="../images/GoTop.gif" width="60" height="20" border="0"></a>&nbsp;  <a href="linux_3.htm"><img src="../images/Next.gif" width="60" height="20" border="0"></a></span> </p>
+    <!-- InstanceEndEditable --></td>
+  </tr>
+  <tr>
+    <td height="92" colspan="2" valign="top">      <hr width="750" size="1" noshade class="style3">      
+      <p align="center" class="style9">Email:<a href="mailto:rong_xiao@sina.com">rong_xiao@sina.com</a></p>
+    <p align="center" class="style21 style8 style3">建议分辨率：800*600</p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+<!-- InstanceEnd --></html>

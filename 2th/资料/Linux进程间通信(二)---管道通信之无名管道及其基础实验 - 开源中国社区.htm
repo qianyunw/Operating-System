@@ -1,0 +1,1238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0045)http://www.oschina.net/question/565065_115152 -->
+<html lang="zh-CN" xml:lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <link rel="shortcut icon" type="image/x-icon" href="http://www.oschina.net/img/favicon.ico?t=1423294220000">
+  <title>Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区</title>
+      <link rel="stylesheet" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/style2013.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/channel.css" type="text/css" media="screen">
+  <link rel="stylesheet" type="text/css" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/jquery.fancybox-1.3.4.css" media="screen">
+  <link rel="alternate" type="application/rss+xml" title="最新开源项目" href="http://www.oschina.net/project/rss">
+  <link rel="alternate" type="application/rss+xml" title="最新开源资讯" href="http://www.oschina.net/news/rss">
+  <link rel="alternate" type="application/rss+xml" title="最新问题列表" href="http://www.oschina.net/question/rss">
+  <link rel="alternate" type="application/rss+xml" title="最新翻译列表" href="http://www.oschina.net/translate/rss">
+  <link rel="alternate" type="application/rss+xml" title="最新博客列表" href="http://www.oschina.net/blog/rss">
+  <link rel="alternate" type="application/rss+xml" title="最新代码分享列表" href="http://www.oschina.net/code/rss">
+  <link rel="alternate" type="application/rss+xml" title="开源中国 - 源码列表" href="http://www.oschina.net/code/source_rss">
+    <!--添加emoji支持-->
+    <link rel="stylesheet" type="text/css" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/nature.css">
+    <link rel="stylesheet" type="text/css" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/object.css">
+    <link rel="stylesheet" type="text/css" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/people.css">
+    <link rel="stylesheet" type="text/css" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/place.css">
+    <link rel="stylesheet" type="text/css" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/Sysmbols.css">
+    <link rel="stylesheet" type="text/css" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/twemoji.css">
+
+  <script async="" type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/ca-pub-1307862221338762.js"></script><script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/jquery.form.js"></script>
+  <script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/jquery.fancybox-fixed.js"></script>
+    <link rel="stylesheet" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/tip-yellowsimple.css" type="text/css">
+  <script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/jquery.poshytip.min.js"></script>
+  <script type="text/javascript">
+  	g_user = {
+	id:0,
+	name:'',
+	login:false};  </script>
+    <script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/oschina.js"></script>
+  <script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/utils.js"></script>
+  <script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/channel.js"></script>
+    <style id="poshytip-css-tip-yellowsimple" type="text/css">div.tip-yellowsimple{visibility:hidden;position:absolute;top:0;left:0;}div.tip-yellowsimple table, div.tip-yellowsimple td{margin:0;font-family:inherit;font-size:inherit;font-weight:inherit;font-style:inherit;font-variant:inherit;}div.tip-yellowsimple td.tip-bg-image span{display:block;font:1px/1px sans-serif;height:10px;width:10px;overflow:hidden;}div.tip-yellowsimple td.tip-right{background-position:100% 0;}div.tip-yellowsimple td.tip-bottom{background-position:100% 100%;}div.tip-yellowsimple td.tip-left{background-position:0 100%;}div.tip-yellowsimple div.tip-inner{background-position:-10px -10px;}div.tip-yellowsimple div.tip-arrow{visibility:hidden;position:absolute;overflow:hidden;font:1px/1px sans-serif;}</style><style id="poshytip-css-tip-yellowsimple question-tag" type="text/css">div.tip-yellowsimple question-tag{visibility:hidden;position:absolute;top:0;left:0;}div.tip-yellowsimple question-tag table, div.tip-yellowsimple question-tag td{margin:0;font-family:inherit;font-size:inherit;font-weight:inherit;font-style:inherit;font-variant:inherit;}div.tip-yellowsimple question-tag td.tip-bg-image span{display:block;font:1px/1px sans-serif;height:10px;width:10px;overflow:hidden;}div.tip-yellowsimple question-tag td.tip-right{background-position:100% 0;}div.tip-yellowsimple question-tag td.tip-bottom{background-position:100% 100%;}div.tip-yellowsimple question-tag td.tip-left{background-position:0 100%;}div.tip-yellowsimple question-tag div.tip-inner{background-position:-10px -10px;}div.tip-yellowsimple question-tag div.tip-arrow{visibility:hidden;position:absolute;overflow:hidden;font:1px/1px sans-serif;}</style><style id="poshytip-css-tip-yellowsimple question-tag" type="text/css">div.tip-yellowsimple question-tag{visibility:hidden;position:absolute;top:0;left:0;}div.tip-yellowsimple question-tag table, div.tip-yellowsimple question-tag td{margin:0;font-family:inherit;font-size:inherit;font-weight:inherit;font-style:inherit;font-variant:inherit;}div.tip-yellowsimple question-tag td.tip-bg-image span{display:block;font:1px/1px sans-serif;height:10px;width:10px;overflow:hidden;}div.tip-yellowsimple question-tag td.tip-right{background-position:100% 0;}div.tip-yellowsimple question-tag td.tip-bottom{background-position:100% 100%;}div.tip-yellowsimple question-tag td.tip-left{background-position:0 100%;}div.tip-yellowsimple question-tag div.tip-inner{background-position:-10px -10px;}div.tip-yellowsimple question-tag div.tip-arrow{visibility:hidden;position:absolute;overflow:hidden;font:1px/1px sans-serif;}</style><link href="http://www.oschina.net/js/ke/themes/default/default.css" rel="stylesheet"><link href="http://www.oschina.net/js/ke/themes/oschina/oschina.css" rel="stylesheet"></head>
+<body>
+<div id="OSC_NavTop">
+	<div class="wp998">
+        <div id="OSC_Channels">
+        	<ul>
+        	<li class="item"><a href="http://www.oschina.net/" class="home">首页</a></li>        	<li class="item control_select"><a href="http://www.oschina.net/project" class="project">开源项目</a>
+				<ul class="cs_content">
+					<li><a href="http://www.oschina.net/project/zh">国产开源项目</a></li>
+					<li><a href="http://www.oschina.net/project/tags">项目分类</a></li>
+					<li><a href="http://www.oschina.net/project/list?sort=time">最新收录项目</a></li>
+					<li class="split"></li>
+                	                	<li><a href="http://www.oschina.net/project/lang/19/java">Java 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/194/csharp">C# 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/22/php">PHP 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/21/c">C/C++ 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/26/ruby">Ruby 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/25/python">Python 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/358/go">Go开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/28/javascript">JS开源软件</a></li>
+				</ul>
+			</li>
+        	<li class="item control_select">
+				<a href="http://www.oschina.net/question" class="question hl">问答</a>
+				<ul class="cs_content">
+                	<li><a href="http://www.oschina.net/question?catalog=1"> 技术问答 » </a></li>
+                	<li><a href="http://www.oschina.net/question?catalog=2"> 技术分享 » </a></li>
+                	<li><a href="http://www.oschina.net/question?catalog=3"> IT大杂烩 » </a></li>
+                	<li><a href="http://www.oschina.net/question?catalog=100"> 职业生涯 » </a></li>
+                	<li><a href="http://www.oschina.net/question?catalog=4"> 站务/建议 » </a></li>
+                	<li><a href="http://www.oschina.net/alipay"> 支付宝专区 » </a></li>
+                	<li><a href="http://www.oschina.net/mopaas"> MoPaaS专区 » </a></li>
+                	<li><a href="http://www.oschina.net/hardware"> 开源硬件专区 » </a></li>
+				</ul>
+			</li>
+        	<li class="item"><a href="http://www.oschina.net/code/list" class="code">代码</a></li>
+        	        	<li class="item"><a href="http://www.oschina.net/blog" class="blog">博客</a></li>
+        	<li class="item"><a href="http://www.oschina.net/translate" class="tran">翻译</a></li>
+            <li class="item"><a href="http://www.oschina.net/news" class="news">资讯</a></li>
+        	<li class="item control_select">
+				<a href="http://www.oschina.net/android" class="mobile">专题</a>
+				<ul class="cs_content cs_mobile">
+        			<li><a href="http://www.oschina.net/events" style="color:#c00">源创会</a> <a href="http://www.oschina.net/video">视频</a></li>
+        			<li><a href="http://www.oschina.net/question/tag/%E9%AB%98%E6%89%8B%E9%97%AE%E7%AD%94">高手问答</a> <a href="http://www.oschina.net/question/tag/%E5%BC%80%E6%BA%90%E8%AE%BF%E8%B0%88">访谈</a></li>
+        			<li><a href="http://www.oschina.net/question/tag/%E5%BC%80%E6%BA%90%E8%AE%BF%E8%B0%88">访谈</a> <a href="http://www.oschina.net/question/tag/%E5%BC%80%E6%BA%90%E5%91%A8%E5%88%8A">周刊</a> <a href="http://my.oschina.net/xxiaobian/blog?catalog=547834">乱弹</a></li>
+            		<li class="split"></li>
+                	<li class="android_"><a href="http://www.oschina.net/android">Android开发专区</a></li>
+                	<li class="ios_"><a href="http://www.oschina.net/ios/home">iOS开发专区</a></li>
+                	<li class="ios_"><a href="http://www.oschina.net/ios/codingList">iOS代码库</a></li>
+                	<li class="wp7_"><a href="http://www.oschina.net/wp">Windows Phone</a></li>
+					
+				</ul>
+			</li>
+        	        										            <li class="item control_select">
+                <a href="http://city.oschina.net/" id="MyCities" title="城市圈">城市圈</a>
+							</li>
+        	</ul>
+        </div>
+		<div id="OSC_Userbar">
+                		    		当前访客身份：游客 [ <a href="http://www.oschina.net/home/login?goto_page=http%3A%2F%2Fwww.oschina.net%2Fquestion%2F565065_115152">登录</a> | <a href="http://www.oschina.net/home/reg">加入开源中国</a> ]
+    				</div>
+		<div class="clear"></div>
+	</div>
+
+</div>
+<div id="OSC_Banner"><div class="wp998"><a href="http://www.oschina.net/" class="Logo" title="OSChina 开源中国">开源中国</a>
+<h1><a href="http://www.oschina.net/question">问答</a></h1>
+<dl>
+    <dt>当前位置：</dt>
+    <dd>
+                                    <a href="http://www.oschina.net/question">问答</a>&nbsp;»
+                <a href="http://www.oschina.net/question?catalog=2">技术分享</a>                                        </dd>
+</dl>
+<form action="http://www.oschina.net/search" class="search">
+    <input type="hidden" name="scope" value="bbs">
+    <input id="channel_q" type="text" name="q" value="" placeholder="资讯、软件、分享、代码、博客" class="TXT">
+    <button type="submit" class="BTN">搜 索</button>
+</form>
+<div class="clear"></div></div></div>
+<div id="OSC_Screen">
+	<div id="OSC_Content" class="CenterDiv">
+<script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/scrolltopcontrol.js"></script>
+<script type="text/javascript">
+  	scrolltotop.offset(100,120);
+  	scrolltotop.init();
+	$(function(){
+		$('a.ShowUserOutline img.SmallPortrait').poshytip({
+			className: 'tip-yellowsimple',
+			alignTo: 'target',
+			alignX: 'right',
+			alignY: 'inner-top',
+			offsetX: 5,
+			offsetY: 0,
+			fade: false,
+			slide: false,
+			content: function(updateCallback) {
+				ajax_get("/action/ajax/get_user_outline?id="+$(this).attr('user'),false,function(html){
+					updateCallback(html);
+				});
+				return "<div style='height:100px;'>Loading...</div>";
+			}
+		});
+	});
+	function add_to_favorite(pid,concern_it){
+			alert("必须登录后才能收藏");
+		}
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        osc.show_tag_introduce_project();
+        osc.show_tag_introduce_other();
+    });
+</script>
+
+
+
+<div class="Question">
+    <div class="Body">
+        <div class="main">
+            <div class="Title">
+                <a class="jump_answer" href="http://www.oschina.net/question/565065_115152#tags_nav" title="跳到回复"></a>
+
+                <div class="QTitle">
+                                        <h1><a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区.htm" hidefocus="true" name="top">Linux进程间通信(二)---管道通信之无名管道及其基础实验</a></h1>
+
+                    <div class="array"></div>
+                </div>
+                <div class="clear"></div>
+            
+                <div class="clear"></div>
+            </div>
+                                
+
+            <div class="Content">
+                <p style="margin:0 0 10px 0;"><a style="color:#A00;font-weight:bold;" href="http://www.oschina.net/news/66188/oschina-crowdsourcing" target="_blank">开源中国携 200 万开发者开始真正的软件众包</a>&nbsp;&nbsp;<img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/hot3.png" align="absmiddle"></p>
+                <div class="detail"><p><span style="font-size:14px; color:#009900"><strong>管道简介</strong></span></p> 
+<p>&nbsp; &nbsp;管道是Linux中进程间通信的一种方式，它把一个程序的输出直接连接到另一个程序的输入(其实我更愿意将管道比喻为农村浇地的管子)。Linux的管道主要包括两种：无名管道和有名管道。这一节主要讲无名管道，首先介绍一下这两个管道。（特点很重要啊！）</p> 
+<p><span style="font-size:12px"><strong>1、无名管道</strong></span></p> 
+<p>&nbsp; &nbsp;无名管道是Linux中管道通信的一种原始方法，如图一(左)所示，它具有以下<span style="color:#ff0000">特点</span>：</p> 
+<p>&nbsp; &nbsp;① &nbsp;它只能用于具有亲缘关系的进程之间的通信（也就是父子进程或者兄弟进程之间）；</p> 
+<p>&nbsp; &nbsp;② &nbsp;它是一个半双工的通信模式，<span style="color:#ff0000">具有固定的读端和写端</span>；</p> 
+<p>&nbsp; &nbsp;③ &nbsp; 管道也可以看成是一种特殊的文件，对于它的读写也可以使用普通的 read()、write()等函数。但它不是普通的文件，并不属于其他任何文件系统并且只存在于内存中。</p> 
+<p><span style="font-size:12px"><strong>2、有名管道(FIFO)</strong></span></p> 
+<p>&nbsp; &nbsp; 有名管道是对无名管道的一种改进，如图1(右)所示，它具有以下<span style="color:#ff0000">特点</span>：</p> 
+<p>&nbsp; &nbsp; ① &nbsp;它可以使互不相关的两个进程间实现彼此通信；</p> 
+<p>&nbsp; &nbsp; ② &nbsp;该管道可以通过路径名来指出，并且在文件系统中是可见的。在建立了管道之后，两个进程就可以把它当做普通文件一样进行读写操作，使用非常方便；</p> 
+<p>&nbsp; &nbsp; ③ &nbsp;FIFO严格地遵循先进先出规则，对管道及FIFO的读总是从开始处返回数据，对它们的写则是把数据添加到末尾，它们不支持如 lseek()等文件定位操作。</p> 
+<p>&nbsp; &nbsp;&nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131316_s3L5.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131316_s3L5.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p><span style="font-size:14px; color:#009900"><strong>无名管道及其系统调用</strong></span></p> 
+<p><strong><span style="font-size:12px">1、管道创建与管道说明</span></strong></p> 
+<p>&nbsp; &nbsp; 管道是基于文件描述符的通信方式，当一个管道建立时，它会创建两个文件描述符fd[0]和fd[1]，其中<span style="color:#ff0000">fd[0]固定用于读管道，而fd[1]固定用于写管道</span>，如图2所示，这样就构成了一个半双工的通道。</p> 
+<p>&nbsp; &nbsp;&nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131316_izKO.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131316_izKO.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p>&nbsp; &nbsp;管道关闭时只需要将这两个文件描述符关闭即可，可使用普通的close()函数逐个关闭各个文件描述符。</p> 
+<p><span style="font-size:12px"><strong>2、管道创建函数</strong></span></p> 
+<p>&nbsp; &nbsp;创建管道可以调用 pipe() 来实现，如下表</p> 
+<p>&nbsp;&nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131316_y3Bu.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131316_y3Bu.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p><strong><span style="font-size:12px">3、管道读写说明</span></strong></p> 
+<p>&nbsp; &nbsp;用 pipe() 创建的管道两端处于同一个进程中，由于管道主要是用于在不同的进程间通信的，因此，在实际应用中没有太大意义。实际上，<span style="color:#ff0000">通常先是创建一个管道，再调用fork()函数创建一个子进程</span>，该子进程会继承父进程所创建的管道，这时，父子进程管道的文件描述符对应关系如下图</p> 
+<p>&nbsp; &nbsp; &nbsp;&nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131317_TYa8.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131317_TYa8.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p>&nbsp; &nbsp;此时的关系看似非常复杂，实际上却已经给不同进程之间的读写创造了很好的条件。父子进程分别拥有自己的读写通道，为了实现父子进程之间的读写，只需把无关的读端或写端的文件描述符关闭即可。例如，图4中，将父进程的写端fd[1]和子进程的读端fd[0]关闭，则父子进程之间就建立起一条“子进程写入父进程读取”的通道。 &nbsp; 同样，也可以将父进程的读端fd[0]和子进程的写端fd[1]关闭，则父子进程之间就建立起一条“父进程写入子进程读取”的通道</p> 
+<p>&nbsp; &nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131317_Qp4K.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131317_Qp4K.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p>&nbsp; &nbsp;另外，父进程还可以创建多个子进程，各个子进程都继承了相应的fd[0]和fd[1]，此时，只需要关闭相应的端口就可以建立各子进程之间的的通道。</p> 
+<p><span style="font-size:12px"><strong>4、管道读写注意点</strong></span></p> 
+<p>&nbsp; &nbsp;● &nbsp;只有在管道的读端存在时，向管道写入数据才有意义。否则，向管道写入数据的进程将收到内核传来的 SIGPIPE 信号(通常为 Broken pipe错误)。</p> 
+<p>&nbsp; &nbsp;● &nbsp;向管道写入数据时，Linux将不保证写入的原子性，管道缓冲区一有空闲区域，写进程就会试图向管道写入数据。如果读进程不读取管道缓冲区中的数据，那么写进程将会一直阻塞。</p> 
+<p>&nbsp; &nbsp;● &nbsp;父子进程在运行时，它们的先后次序并不能保证。因此，为了保证父子进程已经关闭了相应的文件描述符，可在两个进程中调用 sleep()函数。当然，这种调用不是很好的解决方法，以后我会用进程之间的同步与互斥机制来修改它的！</p> 
+<p><br> </p> 
+<p>基础实验</p> 
+<p>&nbsp; &nbsp; 本实验中，首先创建管道，之后父进程使用 fork()函数创建子进程，最后通过关闭父进程的读描述符fd[0]和子进程的写描述符fd[1]来建立一个"父进程写入子进程读取"的管道，从而建立起它们之间的通信。</p> 
+<p>&nbsp; &nbsp;本实验代码如下，我上传到网站，pipe.c<a href="http://download.csdn.net/detail/mybelief321/5561473" target="_blank">点此下载</a></p> 
+<p><a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131318_xipV.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131318_xipV.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p><a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131318_TETa.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131318_TETa.jpg" alt="" style="cursor: pointer;"></a>&nbsp;&nbsp;</p> 
+<p>&nbsp; 使用命令: gcc pipe.c -o pipe编译后，运行：./pipe 可以看到如下结果</p> 
+<p>&nbsp; &nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131318_8cWk.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131318_8cWk.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p><br> </p> 
+<p><strong><span style="font-size:14px; color:#009900">标准流管道</span></strong></p> 
+<p><span style="font-size:12px"><strong>标准流管道函数说明</strong></span></p> 
+<p>&nbsp; 与Linux的文件操作中有基于文件流的标准I/O操作一样，管道的操作也支持基于文件流的的模式。这种基于文件流的管道主要是用来创建一个连接到另一个进程的管道，这里的"另一个进程"也就是一个可以进行一定操作的可执行文件，例如，用户执行“ls -l”或者自己编写的程序“./pipe” &nbsp;等。由于这类操作很常用，因此标准流管道就将一系列的创建过程合并到一个函数 popen()中完成，它所完成的工作有以下几步:</p> 
+<p>&nbsp; &nbsp;① &nbsp;创建一个管道</p> 
+<p>&nbsp; &nbsp;② &nbsp;fork()创建一个子进程</p> 
+<p>&nbsp; &nbsp;③ &nbsp;在父子进程中关闭不需要的文件描述符</p> 
+<p>&nbsp; &nbsp;④ &nbsp;执行 exec 函数族调用</p> 
+<p>&nbsp; &nbsp;⑤ &nbsp;执行函数中所指定的命令</p> 
+<p>&nbsp; &nbsp;这个函数的使用可以大大减少代码的编写量，但同时也有一些不利之处。例如，它不如前面管道创建的函数那样灵活多变，并且用popen()创建的管道必须使用标准I/O函数进行操作，而不能使用前面的 read()、write()一类不带缓冲的I/O函数。与之相对应，关闭用popen()创建的流管道必须使用函数 pclose()，该函数关闭标准I/O流，并等待命令执行结束。</p> 
+<p><span style="font-size:12px"><strong>函数格式</strong></span></p> 
+<p>&nbsp; &nbsp;popen()函数和pclose()函数如下表：</p> 
+<p>&nbsp; &nbsp;&nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131319_95Xo.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131319_95Xo.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p>&nbsp; &nbsp;&nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131320_wGmx.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131320_wGmx.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p>基础实验2</p> 
+<p>&nbsp; &nbsp; 本实验中，使用popen()函数来执行“ls -l”命令。可以看出，popen()函数的使用能使程序变得短小精悍。</p> 
+<p>&nbsp; &nbsp; standard_pipe.c文件<a href="http://download.csdn.net/detail/mybelief321/5561891" target="_blank">点此下载</a></p> 
+<p>&nbsp; &nbsp;&nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131320_1Mov.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131320_1Mov.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p>&nbsp; &nbsp;执行结果如下</p> 
+<p>&nbsp; &nbsp;<a href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131320_ELuB.jpg" target="_blank"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/17131320_ELuB.jpg" alt="" style="cursor: pointer;"></a></p> 
+<p>&nbsp; &nbsp;下一节讲有名管道</p> 
+<p>&nbsp; &nbsp;</p> 
+<p>&nbsp; &nbsp;&nbsp;</p>
+<link rel="stylesheet" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/SyntaxHighlighter.css" type="text/css">
+<script src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/shCore.js"></script>
+<script src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/shSyntax.js"></script>
+<script>$(document).ready(function(){dp.SyntaxHighlighter.HighlightAll('code');});</script><br>原文链接：<a href="http://blog.csdn.net/mybelief321/article/details/9073895" target="_blank">http://blog.csdn.net/mybelief321/article/details/9073895</a>                    <div class="clear"></div><div class="EditLogs">
+	<span class="question_resupply_list">
+		</span>
+</div></div>
+                                <div class="Asker">
+                    <div class="info" title="长平狐">
+					<span class="ainfo">
+						<a href="http://my.oschina.net/changpinghu" class="ShowUserOutline" target="_blank" title="长平狐"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/565065_50.jpg" align="absmiddle" alt="长平狐" title="长平狐" class="SmallPortrait" user="565065"></a>
+					</span>
+					<span class="pinfo">
+		    			<a href="http://my.oschina.net/changpinghu" class="Asker-Name" target="_blank">长平狐</a><br>
+		    			<span class="pub_time">发帖于&nbsp;2年前</span><br>
+		    			<span><a href="http://www.oschina.net/question/565065_115152#answers" class="answer_count">0</a>回/647阅</span>
+					</span>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="tags_toolbars">
+                    <div class="Tags" id="tags_nav">
+                        <strong>标签：</strong>
+                                                    &lt;无&gt;
+                                                                    </div>
+                                            <div class="SameQuestions">
+			<span class="q_toolbar">
+				<ul>
+                                        <li> <a href="javascript:report('http://www.oschina.net/question/565065_115152',115152,2)">举报&nbsp;</a></li>
+                    <li id="Share">
+                        <a class="Ask_Share_Tencent" title="分享到腾讯微博" href="javascript:(function(){window.open('http://v.t.qq.com/share/share.php?url='+encodeURIComponent(document.location)+'&appkey=96f54f97c4de46e393c4835a266207f4&site=&title='+encodeURIComponent(document.title)+encodeURIComponent(': 管道简介    管道是Linux中进程间通信的一种方式，它把一个程序的输出直接连接到另一个程序的输入(其实我更愿意将管道比喻为农村浇地的管子)。Linux的管道主要包括两种...'),'', 'width=450, height=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, location=yes, resizable=no, status=no');}())"></a>
+                        <a class="Ask_Share_Sina" title="分享到新浪微博" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f='http://v.t.sina.com.cn/share/share.php?appkey=858381728',u=z||d.location,p=['&url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');function%20a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,'','','','Linux进程间通信(二)---管道通信之无名管道及其基础实验: 管道简介    管道是Linux中进程间通信的一种方式，它把一个程序的输出直接连接到另一个程序的输入(其实我更愿意将管道比喻为农村浇地的管子)。Linux的管道主要包括两种...','','utf-8'));"></a>
+                        |<a href="javascript:function(0);">&nbsp;分享到</a>
+                    </li>
+                </ul>
+			</span>
+
+                            <div class="clear"></div>
+                        </div>
+                                    </div>
+            </div>
+            <div class="Vote" id="Vote">
+                                                <a id="vote_up" class="vote-up-off" href="http://www.oschina.net/question/565065_115152#" title="顶：这问题很有用或者提问清晰明了"></a>
+                                <span class="q_vote_num">0</span>
+                                    <a id="vote_down" class="vote-down-off" href="http://www.oschina.net/question/565065_115152#" title="踩：这问题不知道在问什么，或者没什么用"></a>
+                                <span class="store">
+    		<a title="收藏此话题" class="Tool-Store-Off" id="favor_trigger" href="javascript:;">收藏(0)</a>
+    		</span>
+            </div>
+        </div>
+        <style type="text/css">
+            #TagsSwitcher { color : #A00; }
+
+            #RecTags, #MyTags { margin : 5px 0; }
+
+            #RecTags a.tag { line-height : 24px; }
+
+            #favor_form p:first-child { margin : 5px 0; }
+
+            #favor_form { width : 200px; }
+
+            #favor_form p { color : #666; }
+
+            #favor_form form { width : 200px; }
+
+            #favor_form form ._favor_input { display : block; margin : 2px 0; width : 199px; }
+
+            #favor_form form ._favor_button { float : left; padding : 2px 5px; }
+
+            .favor_ok { text-align : center; font-size : 10.5pt; width : 199px; height : 60px; margin-top : 10px; }
+
+            #TagsSwitcher { cursor : pointer; float : right; margin-top : 10px; }
+
+            #MyTags { display : none; width : 199px; }
+
+            #MyTags a.tag { float : left; background-color : #E0EAF1; border-bottom : 1px solid #3E6D8E; border-right : 1px solid #7F9FB6; color : #3E6D8E; font-size : 8pt; line-height : 16px; margin : 2px 2px 2px 0; padding : 2px 4px; text-decoration : none; white-space : nowrap; }
+
+            #MyTags a.tag:hover { background-color : #3E6D8E; color : #FFF; }
+
+            .osc_promotion { position : relative; display : inline-block; padding : 10px; margin : 10px 0; border : 1px solid #ccc; }
+
+            .osc_promotion .c { position : absolute; right : -1px; top : -1px; }
+
+            .ask_toolbar { float : right; list-style : none; font-size : 12px; color : #333; height : 28px; _padding-top : 5px; overflow : hidden; margin : 20px 0 10px 0; }
+
+            .ask_toolbar div { float : left; margin-left : 5px; background : url("/img/ask-icon.gif") no-repeat; padding : 6px 0 6px 15px; padding-left : 15px; height : 16px; }
+
+            .ask_toolbar a { height : 16px; color : #333; text-decoration : none; display : inline-block; zoom : 1; vertical-align : middle; }
+
+            .ask_share { width : 89px; vertical-align : bottom; line-height : 15px; _line-height : 14px; }
+
+            .ask_share a { background : url("/img/ask-icon.gif"); width : 16px; }
+
+            a.ask_share_sina { background : url("/img/ask-icon.gif") 0 -40px no-repeat; margin-left : 5px; }
+
+            a.ask_share_tencent { background-position : 0 -70px; margin-left : 5px; }
+
+            .ask_toolbar em { height : 28px; line-height : 28px; width : 14px; display : inline-block; float : left; background : url("/img/ask-icon.gif") top right; }
+
+            .ask_collect a, .ask_report a, .ask_vote a, .ask_collected a { padding-left : 20px; line-height : 15px; }
+
+            .ask_collect a { background : url("/img/ask-icon.gif") 0 -131px no-repeat; }
+
+            .ask_collected a { background : url("/img/ask-icon.gif") 0 -100px no-repeat; }
+
+            div.ask_collect_count { background : url("/img/ask-icon.gif") 0 -309px no-repeat; font-weight : bold; font-size : 14px; margin-left : 0; height : 16px; line-height : 16px; }
+
+            .ask_report a { background : url("/img/ask-icon.gif") 0 -160px no-repeat; }
+
+            em.ask_collect_count_r { background-position : 59px -309px; }
+
+            .ask_vote a { background : url("/img/ask-icon.gif"); }
+                        a.ask_vote_up { background-position : 3px -190px; }
+
+            a.ask_vote_down { background-position : 0 -280px; }
+
+            a.ask_vote_uped { background-position : 3px -190px; }
+                        a.ask_vote_downed { background-position : 0 -280px; }
+
+            .ask_vote span { display : inline-block; margin : 0 10px; font-weight : bold; font-size : 14px; vertical-align : middle; margin-bottom : 2px; line-height : 16px; }
+        </style>
+        <div class="clear"></div>
+    
+    	        <div class="clear"></div>
+                        <div class="QuestionReplies">
+            <h2>
+				<span class="sort">
+					<a href="http://www.oschina.net/question/565065_115152#answers" class="current">按默认排序</a>&nbsp;
+					<a href="http://www.oschina.net/question/565065_115152?sort=time#answers">显示最新评论</a>&nbsp;&nbsp;
+				</span>
+                <a name="answers"></a>共有<em class="answer_count">0</em>个评论
+                            </h2>
+                        <ul class="list"><span class="hr unvisible"></span>            </ul>
+                            </div>
+        <div class="recruitment recruitment-question">
+	<div class="recruit-heading">
+		<div class="title">
+			最新热门职位
+		</div>
+		<div class="more">
+			更多开发者职位上
+			<a href="http://job.oschina.net/" target="_blank" class="link">开源中国·招聘</a>
+		</div>
+	</div>
+	<div class="recruit-body">
+		<ul>
+									<li>
+				<div class="logo-img">
+					<a href="http://job.oschina.net/position/9248_2473565_20481" target="_blank">
+										<span>九
+</span>
+										</a>
+				</div>
+				<div class="info-list">
+					<div>
+						<a href="http://job.oschina.net/position/9248_2473565_20481" target="_blank">	网站美工设计师
+</a>
+						<a href="http://job.oschina.net/company/2473565_9248" target="_blank">
+							<small>九寸云
+</small>
+						</a>
+					</div>
+					<h5>
+						月薪：
+						<span class="font-red">5-8K</span>
+					</h5>
+				</div>
+			</li>
+												<li>
+				<div class="logo-img">
+					<a href="http://job.oschina.net/position/9033_2453390_19923" target="_blank">
+										<img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/09122503_3uy42453390.png">
+										</a>
+				</div>
+				<div class="info-list">
+					<div>
+						<a href="http://job.oschina.net/position/9033_2453390_19923" target="_blank">	Java开发工程师实习...
+</a>
+						<a href="http://job.oschina.net/company/2453390_9033" target="_blank">
+							<small>图恩科技
+</small>
+						</a>
+					</div>
+					<h5>
+						月薪：
+						<span class="font-red">3-5K</span>
+					</h5>
+				</div>
+			</li>
+								</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+<style>
+	/*招聘广告位--样式*/
+	.clear{
+		clear:both;
+		font-size:1px;
+		line-height: 0;
+	}
+	.recruitment{
+		background:#fff;
+		font-size: 14px;
+		color: #333;
+		padding-bottom: 10px;
+	}
+	.recruitment a{
+		text-decoration: none;
+		color: #333;
+	}
+	.recruitment a:hover{
+		text-decoration: none;
+		color: #459120;
+	}
+	.recruitment ul,.recruitment li{
+		list-style-type: none;
+		padding:0;
+		margin:0;
+	}
+	.recruitment h5{
+		font-weight: 400;
+		font-size: 12px;
+		color: #999;
+		margin:0;
+	}
+	.recruitment .recruit-heading{
+		height: 34px;
+		line-height: 34px;
+		border-bottom:1px solid #ddd;
+		margin-bottom: 10px;
+	}
+	.recruitment .recruit-heading .title{
+		float:left;
+	}
+	.recruitment .recruit-heading .more{
+		float:right;
+	}
+	.recruitment .recruit-heading .link{
+		color:#3AA904;
+		font-size: 12px;
+		font-weight: bold;
+	}
+	.recruitment .recruit-body{
+	}
+	.recruitment .recruit-body li{
+		outline: 0;
+		padding:10px 0;
+		width: 50%;
+		height: 50px;
+		margin:0;
+		float: left;
+	}
+	.recruitment .recruit-body li .logo-img{
+		float: left;
+		width: 44px;
+		height: 44px;
+		display: inline-block;
+		padding: 2px;
+		border:1px solid #ccc;
+	}
+	.recruitment .recruit-body li .logo-img img{
+		width: 44px;
+		height: 44px;
+	}
+	.recruitment .recruit-body li .logo-img span{
+		display: block;
+		font-weight: 700;
+		height: 44px;
+		line-height: 44px;
+		font-size: 20px;
+		text-align: center;
+		border-radius: 5px;
+	}
+	.recruitment .recruit-body li .info-list{
+		margin-left:60px;
+	}
+	.recruitment .recruit-body li .info-list div{
+		line-height: 30px;
+	}
+	.recruitment .recruit-body li .info-list div a{
+		margin-right:10px;
+	}
+	.recruitment .recruit-body li .info-list small{
+		color: #666;
+	}
+	.recruitment .font-red{
+		color: #EB6000 !important;
+	}
+	.recruitment-question{
+		border-bottom: 1px solid #ddd;
+	}
+	.recruitment-question .recruit-heading{
+		padding-top:10px;
+		margin:0 !important;
+		border: 0 !important;
+	}
+	.recruitment-question .recruit-heading .title{
+		font-size:16px;
+	}
+
+	.recruitment .recruit-heading .more{
+		font-size:12px;
+	}
+</style>
+        <div class="AnswerForm">
+                    <form id="form_answer" action="http://www.oschina.net/action/question/answer?question=115152" method="post">
+                <input type="hidden" name="user" value="">
+                <div class="ke-container ke-container-oschina" style="width: 650px;"><div style="display:block;" class="ke-toolbar" unselectable="on"><span class="ke-outline" data-name="bold" title="粗体(Ctrl+B)" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-bold" unselectable="on"></span></span><span class="ke-outline" data-name="italic" title="斜体(Ctrl+I)" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-italic" unselectable="on"></span></span><span class="ke-outline" data-name="underline" title="下划线(Ctrl+U)" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-underline" unselectable="on"></span></span><span class="ke-outline" data-name="strikethrough" title="删除线" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-strikethrough" unselectable="on"></span></span><span class="ke-outline" data-name="removeformat" title="删除格式" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-removeformat" unselectable="on"></span></span><span class="ke-inline-block ke-separator"></span><span class="ke-outline" data-name="insertorderedlist" title="编号" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-insertorderedlist" unselectable="on"></span></span><span class="ke-outline" data-name="insertunorderedlist" title="项目符号" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-insertunorderedlist" unselectable="on"></span></span><span class="ke-outline" data-name="forecolor" title="文字颜色" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-forecolor" unselectable="on"></span></span><span class="ke-outline" data-name="hilitecolor" title="文字背景" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-hilitecolor" unselectable="on"></span></span><span class="ke-outline" data-name="fontname" title="字体" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-fontname" unselectable="on"></span></span><span class="ke-outline" data-name="fontsize" title="文字大小" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-fontsize" unselectable="on"></span></span><span class="ke-inline-block ke-separator"></span><span class="ke-outline" data-name="link" title="超级链接" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-link" unselectable="on"></span></span><span class="ke-outline" data-name="unlink" title="取消超级链接" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-unlink" unselectable="on"></span></span><span class="ke-outline" data-name="emoticons" title="插入表情" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-emoticons" unselectable="on"></span></span><span class="ke-outline" data-name="shcode" title="插入程序代码或脚本" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-shcode" unselectable="on"></span></span><span class="ke-outline" data-name="image" title="图片" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-image" unselectable="on"></span></span><span class="ke-outline" data-name="flash" title="Flash" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-flash" unselectable="on"></span></span><span class="ke-outline" data-name="quote" title="引用某段文字" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-quote" unselectable="on"></span></span><span class="ke-inline-block ke-separator"></span><span class="ke-outline" data-name="source" title="HTML代码" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-source" unselectable="on"></span></span><span class="ke-outline" data-name="about" title="关于" unselectable="on"><span class="ke-toolbar-icon ke-toolbar-icon-url ke-icon-about" unselectable="on"></span></span></div><div style="display: block; height: 121px;" class="ke-edit"><iframe class="ke-edit-iframe" hidefocus="true" frameborder="0" style="width: 100%; height: 121px;"></iframe><textarea class="ke-edit-textarea" hidefocus="true" style="width: 100%; height: 121px; display: none;"></textarea></div><div class="ke-statusbar"><span class="ke-inline-block ke-statusbar-center-icon"></span><span class="ke-inline-block ke-statusbar-right-icon" style="visibility: hidden;"></span></div></div><textarea id="txt_answner" name="body" style="width: 650px; height: 160px; display: none;"></textarea>
+                <input type="submit" value=" 发表评论 " id="FormSubmitButton" class="rndbutton">
+                <span id="form_msg" style="display:none;"></span>
+                <br><br>
+                <a href="http://www.oschina.net/question/565065_115152#answers">回评论顶部</a>&nbsp;|&nbsp;<a href="http://www.oschina.net/question/565065_115152#top">回页面顶部</a>
+            </form>
+            <div class="clear"></div>
+            <script>
+                $('#form_answer').ajaxForm({
+                    dataType: 'json',
+                    beforeSerialize: function ($form, options) {
+                        editor.sync();
+                    },
+                    beforeSubmit: function () {
+                        $('#FormSubmitButton').attr('disabled', 'disabled');
+                        $('#form_msg').html("<span class='ajax_processing'>正在提交评论，请稍候...</span>");
+                        $('#form_msg').show();
+                    },
+                    success: function (json) {
+                        $('#FormSubmitButton').removeAttr('disabled');
+                        if (json.msg) {
+                            $('#form_msg').html("<span class='error_msg'>" + json.msg + "</span>");
+                            $('#form_msg').show();
+                        }
+                        else if (json.id) {
+                            ajax_get("/question/show_answer?_answer_id=" + json.id, true, function (data) {
+                                                                    $('.QuestionReplies ul.list').append(data);
+                                                                editor.html('');
+                                $('.answer_count').html(json.answer_count);
+                            });
+                            $('#form_msg').hide();
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    
+<script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/xregexp-min.js"></script>
+<script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/shCore.min.js"></script>
+<script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/shAutoloader.js"></script>
+<link type="text/css" rel="stylesheet" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/shCore.css">
+<link type="text/css" rel="Stylesheet" href="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/shThemeDefault.css">
+
+<script type="text/javascript">
+    SyntaxHighlighter.autoloader(
+            'applescript			/js/sh309/scripts/shBrushAppleScript.js?t=1423294217000',
+            'actionscript3 as3		/js/sh309/scripts/shBrushAS3.js?t=1423294217000',
+            'bash shell				/js/sh309/scripts/shBrushBash.js?t=1423294217000',
+            'coldfusion cf			/js/sh309/scripts/shBrushColdFusion.js?t=1423294217000',
+            'cpp c					/js/sh309/scripts/shBrushCpp.js?t=1423294217000',
+            'obj-c objc				/js/sh309/scripts/shBrushObjC.js?t=1423294217000',
+            'c# c-sharp csharp		/js/sh309/scripts/shBrushCSharp.js?t=1423294217000',
+            'css					/js/sh309/scripts/shBrushCss.js?t=1423294217000',
+            'delphi pascal			/js/sh309/scripts/shBrushDelphi.js?t=1423294217000',
+            'diff patch pas			/js/sh309/scripts/shBrushDiff.js?t=1423294217000',
+            'erl erlang				/js/sh309/scripts/shBrushErlang.js?t=1423294217000',
+            'groovy					/js/sh309/scripts/shBrushGroovy.js?t=1423294217000',
+            'haxe hx				/js/sh309/scripts/shBrushHaxe.js?t=1423294217000',
+            'java					/js/sh309/scripts/shBrushJava.js?t=1423294217000',
+            'jfx javafx				/js/sh309/scripts/shBrushJavaFX.js?t=1423294217000',
+            'js jscript javascript	/js/sh309/scripts/shBrushJScript.js?t=1423294217000',
+            'perl pl				/js/sh309/scripts/shBrushPerl.js?t=1423294217000',
+            'php					/js/sh309/scripts/shBrushPhp.js?t=1423294217000',
+            'text plain				/js/sh309/scripts/shBrushPlain.js?t=1423294217000',
+            'py python				/js/sh309/scripts/shBrushPython.js?t=1423294217000',
+            'ruby rails ror rb		/js/sh309/scripts/shBrushRuby.js?t=1423294217000',
+            'scala					/js/sh309/scripts/shBrushScala.js?t=1423294217000',
+            'sql					/js/sh309/scripts/shBrushSql.js?t=1423294217000',
+            'vb vbnet				/js/sh309/scripts/shBrushVb.js?t=1423294217000',
+            'xml xhtml xslt html	/js/sh309/scripts/shBrushXml.js?t=1423294217000'
+    );
+    SyntaxHighlighter.all();
+</script>
+    <div class="QuestionRelations">
+        <div id="QuestionWizard">
+            有什么技术问题吗？
+            <a href="http://www.oschina.net/question/ask" class="rndbutton"><span>我要提问</span></a>
+
+            <div class="clear"></div>
+        </div>
+            					<div style="text-align:center;margin-bottom:10px;">
+		<a name="question_banner_one">
+		</a><a href="http://www.jpush.cn/" target="_blank" title="极光推送">
+			<img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/question_banner_one_250_250_bxXDB.jpg" width="250" height="250">
+		</a>
+		 </div>
+	                    <div class="AskerCard">
+                                        <div id="OtherQuestionsOfUser" class="Qlist">
+                    <strong><a href="http://my.oschina.net/changpinghu/?ft=bbs&scope=2&showme=1" class="more">全部(7353
+                        )</a>长平狐的其他问题</strong>
+                    <ul>
+                                                                                    <li><a href="http://www.oschina.net/question/565065_139067" title="使用 UITableView 创建表格应用演练(2)——从plist文件加载并显示数据">使用 UITableView 创建表格应用演练(2)——从plist文件加载并显示数据</a><span class="date">(0回/582
+                                    阅,2年前)</span></li>                                                                                    <li><a href="http://www.oschina.net/question/565065_139066" title="使用 UITableView 创建表格应用演练(4)——自定义单元格">使用 UITableView 创建表格应用演练(4)——自定义单元格</a><span class="date">(0回/425
+                                    阅,2年前)</span></li>                                                                                    <li><a href="http://www.oschina.net/question/565065_139065" title="使用 UITableView 创建表格应用演练(1)——一个简单的表格应用">使用 UITableView 创建表格应用演练(1)——一个简单的表格应用</a><span class="date">(0回/418
+                                    阅,2年前)</span></li>                                                                                    <li><a href="http://www.oschina.net/question/565065_139064" title="iOS7初体验(3)——图像资源Images Assets">iOS7初体验(3)——图像资源Images Assets</a><span class="date">(0回/478
+                                    阅,2年前)</span></li>                                                                                    <li><a href="http://www.oschina.net/question/565065_139063" title="Cocos2d学习笔记(1)——安装模板及ARC支持">Cocos2d学习笔记(1)——安装模板及ARC支持</a><span class="date">(0回/349
+                                    阅,2年前)</span></li>                                            </ul>
+                </div>
+                    </div>
+        			
+        <div class="google_ads" style="margin:20px 0;">
+                    <script src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/question_side"></script><script async="" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/adsbygoogle.js"></script>
+<!-- news-side -->
+<ins class="adsbygoogle" style="display:inline-block;width:250px;height:250px" data-ad-client="ca-pub-1307862221338762" data-ad-slot="9547725620" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:250px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:250px;background-color:transparent"><iframe width="250" height="250" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+                    
+        <div id="Similarity" class="Qlist">
+                                        <strong>类似的话题</strong>
+                <ul>
+                                                                        <li><a href="http://www.oschina.net/question/54100_38106" title="mount时长文件名不能正常显示的解决方法">mount时长文件名不能正常显示的解决方法</a><span class="date">(0回/188
+                                阅,4年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/234345_40362" title="linux系统信息查看命令">linux系统信息查看命令</a><span class="date">(1回/820
+                                阅,4年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/17_522" title="如何判断你的Linux系统是否被黑">如何判断你的Linux系统是否被黑</a><span class="date">(5回/1957
+                                阅,6年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/17_598" title="LINUX启动服务详解">LINUX启动服务详解</a><span class="date">(2回/1853
+                                阅,6年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/17_2280" title="Linux 无法开机 显示 an error occurred during the file sy">Linux 无法开机 显示 an error occurred during the file sy</a><span class="date">(0回/2856
+                                阅,6年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/12_2423" title="Linux内核20天内连爆两高危漏洞，一个命令又可以获得root权限">Linux内核20天内连爆两高危漏洞，一个命令又可以获得root权限</a><span class="date">(20回/3947
+                                阅,6年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/17_2427" title="修改/etc/fstab重起后，无法启动的解决办法 ">修改/etc/fstab重起后，无法启动的解决办法 </a><span class="date">(2回/516
+                                阅,6年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/35466_2612" title="一个Linux初学者的想法">一个Linux初学者的想法</a><span class="date">(1回/1541
+                                阅,6年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/17_3844" title="linux打开文件数量的查看方法">linux打开文件数量的查看方法</a><span class="date">(3回/1622
+                                阅,6年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/3307_4029" title="大企业在后端使用Linux的十大常见方式">大企业在后端使用Linux的十大常见方式</a><span class="date">(1回/1555
+                                阅,6年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/17_4251" title="Linux 命令 “ls ” 的用法">Linux 命令 “ls ” 的用法</a><span class="date">(4回/1333
+                                阅,6年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/129540_31276" title="Linux 动态库与静态库制作及使用详解">Linux 动态库与静态库制作及使用详解</a><span class="date">(0回/2661
+                                阅,4年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/54100_32476" title="Linux下动态库的生成和使用">Linux下动态库的生成和使用</a><span class="date">(6回/16518
+                                阅,4年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/158170_33553" title="linux中less的常用操作">linux中less的常用操作</a><span class="date">(1回/672
+                                阅,4年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/54100_34693" title="linux下抓出哪个进程造成的iowait很高的方法">linux下抓出哪个进程造成的iowait很高的方法</a><span class="date">(0回/1380
+                                阅,4年前)</span></li>                                                                        <li><a href="http://www.oschina.net/question/17_34694" title="查看linux服务器硬盘IO读写负载">查看linux服务器硬盘IO读写负载</a><span class="date">(4回/5309
+                                阅,4年前)</span></li>                                    </ul>
+                    </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/kindeditor-min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    <!--
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('#txt_answner', {
+            themeType: 'oschina',
+            resizeType: 1,
+            urlType: 'domain',
+            shadowMode: false,
+            allowPreviewEmoticons: false,
+            allowImageUpload: true,
+            allowFlashUpload: false,
+            cssPath: '/css/ke-oschina.css?t=1399607771000',
+            uploadJson: '/action/blog/upload_img',
+            afterCreate: function () {
+                /*
+                K.ctrl(this.edit.iframe.get(0).contentWindow.document, 13, function() {
+                    $("#txt_answner").parent().submit();
+			});
+			*/
+                $(this.edit.iframe.get(0).contentWindow.document).keydown(function (e) {
+                    if ((e.ctrlKey || e.metaKey) && e.which == 13 && !e.shiftKey && !e.altKey) {
+                        $("#txt_answner").parent().submit();
+                    }
+                });
+            },
+            afterChange: function () {
+                this.sync();
+            },
+            items: ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'insertorderedlist', 'insertunorderedlist',
+                'forecolor', 'hilitecolor', 'fontname', 'fontsize', '|', 'link', 'unlink', 'emoticons',
+                'shcode', 'image', 'flash', 'quote', '|', 'source', 'about'],
+            htmlTags: {
+                script: ['src'],
+                font: ['color', 'size', 'face', '.background-color'],
+                span: [
+                    '.color', '.background-color', '.font-size', '.font-family', '.background',
+                    '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.line-height'
+                ],
+                div: [
+                    'class', 'align', '.border', '.margin', '.padding', '.text-align', '.color',
+                    '.background-color', '.font-size', '.font-family', '.font-weight', '.background',
+                    '.font-style', '.text-decoration', '.vertical-align', '.margin-left'
+                ],
+                table: [
+                    'border', 'cellspacing', 'cellpadding', 'width', 'height', 'align', 'bordercolor',
+                    '.padding', '.margin', '.border', 'bgcolor', '.text-align', '.color', '.background-color',
+                    '.font-size', '.font-family', '.font-weight', '.font-style', '.text-decoration', '.background',
+                    '.width', '.height', '.border-collapse'
+                ],
+                'td,th': [
+                    'align', 'valign', 'width', 'height', 'colspan', 'rowspan', 'bgcolor',
+                    '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.font-weight',
+                    '.font-style', '.text-decoration', '.vertical-align', '.background', '.border'
+                ],
+                a: ['href', 'target', 'name'],
+                embed: ['src', 'width', 'height', 'type', 'loop', 'autostart', 'quality', '.width', '.height', 'align', 'allowscriptaccess'],
+                img: ['src', 'width', 'height', 'border', 'alt', 'title', 'align', '.width', '.height', '.border'],
+                'p,ol,ul,li,blockquote,h1,h2,h3,h4,h5,h6': [
+                    'align', '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.background',
+                    '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.text-indent', '.margin-left'
+                ],
+                pre: ['class'],
+                hr: ['class', '.page-break-after'],
+                'br,tbody,tr,strong,b,sub,sup,em,i,u,strike,s,del': []
+            }
+        });
+    });
+    //-->
+</script>
+<!--[if lt IE 7]>
+<script type="text/javascript" src="/js/minmax.js?t=1399607773000  </script>
+<![endif]-->
+<script type="text/javascript" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/question"></script>
+<script type="text/javascript">
+    <!--
+    $(document).ready(function () {
+        $.ajax({
+            url: "/action/favorite/attentionUsersCount",
+            type: "get",
+            data: "id="+115152+"&type="+2,
+            success: function (msg) {
+                $("#favor_trigger").html("收藏(" + msg + ")");
+            }
+        });
+        $('.Answer .replies li').hover(
+                function () {
+                    $(this).addClass('hover');
+                },
+                function () {
+                    $(this).removeClass('hover');
+                }
+        );
+
+        $('.detail img').css('cursor', 'pointer');
+        jQuery.each($('.detail img'), function (idx, v) {
+            if (!$(v).parent().is("a")) {
+                $(v).wrap("<a href='" + $(this).attr('src') + "' target='_blank'></a>");
+            }
+        });
+
+        $('#c').bind('mouseover mouseout', function () {
+            $('#c_on').toggle();
+            $('#c_off').toggle();
+        });
+
+        $('#favor_trigger').click(function () {
+                            add_to_favor(115152,2);
+                    });
+    });
+    function ask_too(qid, ask) {
+        ajax_post("/action/question/ask_too?id=" + qid + "&ask=" + ask, "", function (html) {
+            json = eval('(' + html + ')');
+            if (json.asker_count >= 0) {
+                $('#c_asker_count').html(json.asker_count);
+                if (json.ask_mode)
+                    $('#RQuestionAction').html("<span class='rect'>已问同一问题 | <a href='javascript:ask_too(115152,false)'>取消？</a></span>");
+                else
+                    $('#RQuestionAction').html("<a href='javascript:ask_too(115152,true)' class='rndbutton'><span>我想问同样的问题</span></a>");
+            }
+            else {
+                $('#RQuestionAction').poshytip({
+                    className: 'tip-yellowsimple',
+                    content: json.msg,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'center',
+                    alignY: 'top',
+                    offsetY: 6
+                });
+                $('#RQuestionAction').poshytip('show');
+                var t = setTimeout(function () {
+                    clearTimeout(t);
+                    $('#RQuestionAction').poshytip('destroy');
+                }, 4000);
+            }
+        });
+    }
+    function delete_q(qid) {
+        if (!confirm("您确认要删除此问题吗，删除的数据不可恢复？"))
+            return;
+                ajax_post("/action/question/delete?id=" + qid + "&hash=-1332417695", "", function (html) {
+            if (html.length > 0)
+                alert(html);
+            else {
+                location.href = "/question";
+            }
+        });
+    }
+    function edit_answer(aid) {
+        location.href = "/question/edit_answer?id=" + aid;
+    }
+    function delete_answer(aid, hash) {
+        if (!confirm("您确认要删除此答案吗，删除的数据不可恢复？"))
+            return;
+        ajax_post("/action/question/delete_answer?id=" + aid + "&hash=" + hash, "", function (html) {
+            if (html.length > 0)
+                alert(html);
+            else {
+                $('#answer_' + aid).fadeOut();
+                $('#vote_' + aid).fadeOut();
+                $('#answer_' + aid).next('.hr').fadeOut();
+            }
+        });
+    }
+    function delete_post_reply(aid, hash) {
+        if (!confirm("您确认要删除此评论吗，删除的数据不可恢复？"))
+            return;
+        ajax_post("/action/question/delete_answer?id=" + aid + "&hash=" + hash, "", function (html) {
+            if (html.length > 0)
+                alert(html);
+            else {
+                $('#PostReply_' + aid).fadeOut();
+            }
+        });
+    }
+    function delete_q_rpl(qid, rid) {
+        if (!confirm("删除补充说明会被扣威望值，是否继续？"))
+            return;
+        ajax_post("/action/question/delete_detail?id=" + rid, "", function (html) {
+            if (html.length > 0)
+                alert(html);
+            else
+                $("#q_reply_" + rid).fadeOut();
+        });
+    }
+    function close_tip(tid) {
+        $('#' + tid).poshytip('destroy');
+    }
+    //答案投票
+    function vote_answer(qid, vote_up, need_confirm) {
+        if (need_confirm && !vote_up) {
+            if (!$('#a_post_votedown_' + qid).hasClass('bold')) {
+                var vote_down_confirm_msg = "<p>此操作将会扣掉你1个积分，是否继续？</p><p style='margin-top:10px;'><a href='javascript:vote_answer(" + qid + ",false,false)' class='rbtn' style='margin:0 10px 0 50px;'><span>确定</span></a><a href=\"javascript:close_tip('a_post_votedown_" + qid + "')\" class='rbtn'><span>取消</span></a></p>";
+                $('#a_post_votedown_' + qid).poshytip({
+                    className: 'tip-yellowsimple',
+                    content: vote_down_confirm_msg,
+                    showOn: 'none',
+                    slide: false,
+                    fade: false,
+                    alignTo: 'target',
+                    alignX: 'center',
+                    offsetY: 8
+                });
+                $('#a_post_votedown_' + qid).poshytip('show');
+                return;
+            }
+        }
+        if (!need_confirm) {
+            $('#a_post_votedown_' + qid).poshytip('destroy');
+        }
+        ajax_post("/action/question/vote_answer?id=" + qid + "&vote=" + vote_up + "&user=", "", function (data) {
+            json = eval('(' + data + ')');
+            if (json.msg) {
+                var aid = vote_up ? "a_post_voteup_" : "a_post_votedown_";
+                aid += qid;
+                $('#' + aid).poshytip({
+                    className: 'tip-yellowsimple',
+                    content: json.msg,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'center',
+                    alignY: 'top',
+                    offsetY: 6
+                });
+                $('#' + aid).poshytip('show');
+                var t = setTimeout(function () {
+                    clearTimeout(t);
+                    $('#' + aid).poshytip('destroy');
+                }, 2000);
+                //jQuery.fancybox("<div class='error_box'>"+json.msg+"</div>");
+            }
+            else {
+                if (vote_up) {
+                    $('#post_voteup_' + qid).html('(' + json.vote + ')');
+                    var a_post_voteup = $('#a_post_voteup_' + qid);
+                    if (a_post_voteup.attr('class').indexOf("vote-up-off") != -1) {
+                        $('#a_post_voteup_' + qid).attr('class', 'vote-up-on');
+                        $('#a_post_voteup_' + qid).attr('title', '取消支持票');
+                        $('#a_vote_num_' + qid).html(parseInt($('#a_vote_num_' + qid).html()) + 1);
+                    } else {
+                        $('#a_post_voteup_' + qid).attr('class', 'vote-up-off');
+                        $('#a_post_voteup_' + qid).attr('title', '投支持票');
+                        $('#a_vote_num_' + qid).html(parseInt($('#a_vote_num_' + qid).html()) - 1);
+                    }
+                } else {
+                    $('#post_votedown_' + qid).html('(' + json.vote + ')');
+                    var a_post_votedown = $('#a_post_votedown_' + qid);
+                    if (a_post_votedown.attr('class').indexOf("vote-down-off") != -1) {
+                        a_post_votedown.attr('class', 'vote-down-on').attr('title', '取消反对票');
+                        $('#a_vote_num_' + qid).html(parseInt($('#a_vote_num_' + qid).html()) - 1);
+                    } else {
+                        a_post_votedown.attr('class', 'vote-down-off');
+                        a_post_votedown.attr('title', '投反对票');
+                        $('#a_vote_num_' + qid).html(parseInt($('#a_vote_num_' + qid).html()) + 1);
+                    }
+                }
+            }
+        });
+    }
+    //问题投票
+    $('#vote_up').click(function () {
+        if (this.clickTimeout) {
+            // 双击
+            clearTimeout(this.clickTimeout);
+            this.clickTimeout = null;
+            alert("不用那么费劲啦，点击一下就够了:)");
+        }
+        else {
+            // 单击
+            var elem = this;
+            this.clickTimeout = setTimeout(function () {
+                // 执行点击动作
+                elem.clickTimeout = null;
+                vote_question(115152, true, true);
+            }, 250);
+        }
+        //阻止链接onclick时的默认行为
+        return false;
+    });
+    $('#vote_down').click(function () {
+        vote_question(115152, false, true);
+        /*
+        if(this.clickTimeout){
+            // 双击
+            clearTimeout(this.clickTimeout);
+            this.clickTimeout = null;
+            alert("不用那么费劲啦，点击一下就够了:)");
+        }
+        else{
+            // 单击
+            var elem = this;
+            this.clickTimeout = setTimeout(function(){
+                // 执行点击动作
+                elem.clickTimeout = null;
+                vote_question(115152,false, true);
+        }, 250);
+    }
+    //阻止链接onclick时的默认行为
+	*/
+        return false;
+    });
+    function vote_question(qid, vote_up, need_confirm) {
+        if (need_confirm && !vote_up) {
+            if ($('#Vote #vote_down').hasClass('ask_vote_down')) {
+                var vote_down_confirm_msg = "<p>踩问题将会扣掉你1个积分，是否继续？</p><p style='margin-top:10px;'><a href='javascript:vote_question(115152,false,false)' class='rbtn' style='margin-right:10px;'><span>确定</span></a><a href=\"javascript:close_tip('vote_down')\" class='rbtn'><span>取消</span></a></p>";
+                $('#Vote #vote_down').poshytip({
+                    className: 'tip-yellowsimple',
+                    content: vote_down_confirm_msg,
+                    slide: false,
+                    fade: false,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'inner-right',
+                    alignY: 'bottom',
+                    offsetX: -35,
+                    offsetY: 5
+                });
+                $('#Vote #vote_down').poshytip('show');
+                return;
+            }
+        }
+        if (!need_confirm) {
+            $('#Vote #vote_down').poshytip('destroy');
+        }
+        ajax_post("/action/question/vote?user=&id=" + qid + "&vote=" + vote_up, "", function (data) {
+            json = eval('(' + data + ')');
+            if (json.msg) {
+                var aid = vote_up ? "vote_up" : "vote_down";
+                $('#' + aid).poshytip({
+                    className: 'tip-yellowsimple',
+                    content: json.msg,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'inner-right',
+                    alignY: 'bottom',
+                    offsetX: 5,
+                    offsetX: -35
+                });
+                $('#' + aid).poshytip('show');
+                var t = setTimeout(function () {
+                    clearTimeout(t);
+                    $('#' + aid).poshytip('destroy');
+                }, 2000);
+            }
+            else {
+                            if (vote_up) {
+                    $('#Vote .vote-up-count').html(json.vote_up);
+                    if ($('#vote_up').attr('class').indexOf("vote-up-off") != -1) {
+                        $('#vote_up').attr('class', 'vote-up-on');
+                        $('#vote_up').attr('title', '取消顶');
+                        $('.q_vote_num').html(parseInt($('.q_vote_num').html()) + 1);
+                    } else {
+                        $('#vote_up').attr('class', 'vote-up-off');
+                        $('#vote_up').attr('title', '顶：这问题很有用或者很提问清晰明了');
+                        $('.q_vote_num').html(parseInt($('.q_vote_num').html()) - 1);
+                    }
+                }
+                else {
+                    $('#Vote .vote-down-count').html(json.vote_down);
+                    if ($('#vote_down').attr('class').indexOf("vote-down-off") != -1) {
+                        $('#vote_down').attr('class', 'vote-down-on');
+                        $('#vote_down').attr('title', '取消踩');
+                        $('.q_vote_num').html(parseInt($('.q_vote_num').html()) - 1);
+                    } else {
+                        $('#vote_down').attr('class', 'vote-down-off');
+                        $('#vote_down').attr('title', '踩：这问题不知道在问什么，或者没什么用');
+                        $('.q_vote_num').html(parseInt($('.q_vote_num').html()) + 1);
+                    }
+                }
+            }
+        });
+    }
+    //评论答案
+    function reply_to_post(postid, uid) {
+            url = "/action/ajax/reply_to_post?id=" + postid + "&refer=" + uid
+        ajax_post(url, "", function (data) {
+            $.fancybox({
+                content: data,
+                onComplete: function () {
+                    $input = $('#ta_body');
+                        $input.focus();
+                    pos = $input.val()?$input.val().length: 0;
+                    if (document.selection) {
+                        range = $input[0].createTextRange();
+                        range.move("character", pos);
+                        range.select();
+                    } else {
+                        if ($input[0])
+                            $input[0].setSelectionRange(pos, pos);
+                    }
+                }
+            });
+        });
+    }
+
+    function show_rp_next(postid, current, total) {
+        if (current < total) {
+            var next_page = current + 1;
+            var url = "/question/post_replies?answer=" + postid + "&rp=" + next_page;
+            ajax_post(url, "", function (html) {
+                $('#PostReplies_' + postid).html(html);
+                addRepliesHoverEvent();
+            });
+        }
+    }
+
+    function addRepliesHoverEvent() {
+        $("li [id ^= 'PostReply']").hover(function () {
+            $(this).addClass("hover");
+        }, function () {
+            $(this).removeClass("hover");
+        });
+    }
+
+    function show_rp_prev(postid, current, total) {
+        if (current > 1) {
+            var next_page = current - 1;
+            var url = "/question/post_replies?answer=" + postid + "&rp=" + next_page;
+            ajax_post(url, "", function (html) {
+                $('#PostReplies_' + postid).html(html);
+                addRepliesHoverEvent();
+            });
+        }
+    }
+    function mark_as_top(qid, as_top) {
+        var args = "id=" + qid + "&top=" + as_top;
+        ajax_post("/action/question/mark_as_top", args, function (html) {
+            alert(html);
+        });
+    }
+    function mark_as_best(postid, is_best) {
+        var args = "id=" + postid + "&best=" + (is_best ? 1 : 0);
+        ajax_post("/action/question/mark_as_best", args, function (html) {
+            if (html.length > 0) {
+                $('#best_answer_' + postid).poshytip({
+                    className: 'tip-yellowsimple',
+                    content: html,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'center',
+                    alignY: 'top',
+                    offsetY: 6
+                });
+                $('#best_answer_' + postid).poshytip('show');
+                var t = setTimeout(function () {
+                    clearTimeout(t);
+                    $('#best_answer_' + postid).poshytip('destroy');
+                }, 2000);
+            }
+            else {
+                if (is_best) {
+                    $('#answer_' + postid).addClass('Best');
+                    $('#best_answer_' + postid).attr('class', 'accept-on')
+                            .attr('href', 'javascript:mark_as_best(' + postid + ',false)')
+                            .attr('title', '取消标记为最佳答案');
+                } else {
+                    $('#answer_' + postid).removeClass('Best');
+                    $('#best_answer_' + postid).attr('class', 'accept-off')
+                            .attr('href', 'javascript:mark_as_best(' + postid + ',true)')
+                            .attr('title', '标记为最佳答案');
+                }
+            }
+        });
+    }
+    function edit_tags(qid) {
+        popup("/question/edit_tags?question=" + qid);
+    }
+    function edit_catalogs(qid) {
+        popup("/admin/catalog/set-catalogs?parent=1&type=2&id=" + qid);
+    }
+    function event_apply(event_id) {
+        popup("/action/ajax/event_apply", "id=" + event_id);
+    }
+    function cancel_apply(event_id) {
+        if (confirm("您确认要取消参加此次活动吗？")) {
+            ajax_post("/action/event/cancel", "event=" + event_id, function (html) {
+                if (html.length > 0)
+                    alert(html);
+                else
+                    alert('已取消参加此次活动，感谢您的支持:)');
+            });
+        }
+    }
+
+    var favor_ok = "<p class='favor_ok'>已成功添加到收藏夹<br/><br/> <a href='null/favorites?type=$DAISY_OBJ_TYPE'>我的收藏夹</a> | <a href='javascript:close_favor()'>关闭</a></p>";
+    function delete_favor(obi_id, obj_type) {
+        if (!confirm('确定取消收藏？')) return;
+        $.post("/action/favorite/cancel?type=" + obj_type + "&id=" + obi_id + "&user=", function (html) {
+            $('#favor_trigger').parent('div').removeClass('ask_collected').addClass('ask_collect');
+            $('#favor_trigger').attr('title', '添加到收藏');
+            $('#p_favor_count').html(html);
+            $('#favor_trigger').unbind('click');
+            $('#favor_trigger').click(function () {
+                add_to_favor(115152,2);
+            });
+        });
+    }
+    function add_to_favor(obj_id, obj_type) {
+                    if (confirm('必须登录后才能收藏，是否现在登录？')) {
+                location.href = "http://www.oschina.net/home/login?goto_page=" + location.href;
+            }
+            }
+    function close_favor(elem_id) {
+        $('#favor_trigger').poshytip('destroy');
+    }
+    function setTag(tv) {
+        var t = $("._favor_input");
+        var value = t.val();
+        var tags = value.replace(/，/ig, ',').split(',');
+        var exist = false;
+        value = $.map(tags, function (v, i) {
+            if ($.trim(tv) == $.trim(v)) {
+                exist = true;
+                return undefined;
+            }
+            return v;
+        }).join(',');
+        if (exist) {
+            t.val(value);
+            return;
+        }
+        if (value != "")
+            t.val(value + "," + tv);
+        else
+            t.val(tv)
+    }
+    //-->
+</script><div class="clear"></div></div>
+	<div id="OSC_Footer" class="CenterDiv"><style>
+.oscapp {text-align:left; width:220px;}
+.oscapp span {float:left;width:140px;}
+.oscapp a {float:left;text-indent:-9999em;width:16px;margin-left:8px;}
+.oscapp a.android {background:url('/img/android.gif') no-repeat left center;}
+.oscapp a.iphone {background:url('/img/iphone.gif') no-repeat left center;}
+.oscapp a.wp7 {background:url('/img/wp7.gif') no-repeat left center;}
+</style>
+<table width="100%"><tbody><tr>
+<td align="left">© 开源中国(OSChina.NET) | <a href="http://www.oschina.net/home/aboutosc">关于我们</a> | <a href="mailto:market@oschina.cn">广告联系</a> | <a href="http://weibo.com/oschina2010" target="_blank">@新浪微博</a> | <a href="http://m.oschina.net/">开源中国手机版</a> | <a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:#737573;text-decoration:none;">粤ICP备12009483号-3</a></td>
+<td class="oscapp">
+	<span>开源中国手机客户端：</span>
+	<a href="http://www.oschina.net/app" class="android" title="Android客户端">Android</a>
+	<a href="http://www.oschina.net/app" class="iphone" title="iPhone 客户端">iPhone</a>
+	<a href="http://www.oschina.net/app" class="wp7" title="Windows Phone 客户端">WP7</a>
+</td>
+</tr>
+<tr>
+<td colspan="2" align="left">开源中国社区(OSChina.net)是工信部 <a href="http://www.copu.org.cn/" target="_blank">开源软件推进联盟</a> 指定的官方社区</td>
+</tr>
+</tbody></table>
+<script type="text/javascript">
+<!--
+if (top.location != self.location)top.location=self.location;
+//-->
+</script></div>
+</div>
+
+
+<!-- Generated by OsChina.NET (init:0[ms],page:67[ms],ip:114.255.218.22) --><div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div><div id="topcontrol" title="回到顶部" style="position: fixed; bottom: 120px; right: 100px; cursor: pointer;"><img src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/gotop.gif" style="width:31px; height:31px;"></div><object id="b5tplugin" type="application/x-bang5taoplugin" style="position:absolute;left:-9000px;top:-9000px;" width="0" height="0"></object><div class="sogoutip" style="z-index: 2147483645; visibility: hidden; display: none;"></div><div class="sogoubottom" id="sougou_bottom" style="display: none;"></div><div id="ext_stophi" style="z-index: 2147483647;"><div class="extnoticebg"></div><div class="extnotice"><h2>关闭提示 <a href="http://www.oschina.net/question/565065_115152#" title="关闭提示" id="closenotice" class="closenotice">关闭</a></h2><p id="sogouconfirmtxt"></p>  <a id="sogouconfirm" href="http://www.oschina.net/question/565065_115152#" class="extconfirm">确 认</a> <a id="sogoucancel" href="http://www.oschina.net/question/565065_115152#" class="extconfirm">取 消</a></div></div><div id="ext_overlay" class="ext_overlayBG" style="display: none; z-index: 2147483646;"></div><iframe class="sogou_sugg_feedbackquan" frameborder="0" scrolling="no" src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/yun4.htm" style="background-color: transparent; border: none; display: none; z-index: 2147483645; background-position: initial initial; background-repeat: initial initial;"></iframe><div class="rec-mini" id="id_div_close" style="display: none; z-index: 2147483645; width: 53px; height: 53px; position: fixed; right: 7px; bottom: 7px; cursor: pointer; background-image: url(http://ht.www.sogou.com/images/mini.png); background-position: initial initial; background-repeat: no-repeat no-repeat;"></div><script src="./Linux进程间通信(二)---管道通信之无名管道及其基础实验 - 开源中国社区_files/pv.gif"></script></body></html>
